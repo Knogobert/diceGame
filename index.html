@@ -12,32 +12,36 @@
 		</header>
 		<main>
 			<h2>Roll the dice!</h2>
-			
+
 			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
-			
+
 			<form method="get" id="multiplication">
-				
-            	<h4>Die #1: <span id="d1"></span></h4>
-				
+
+				<p style="float: right;">You have <span id="chancesLeft">10</span> chances left!</p>
+
+				<h4>Die #1: <span id="d1"></span></h4>
+
 				<h4>Die #2: <span id="d2"></span></h4>
-				
-            	<h4>Die #3: <span id="d3"></span></h4>
-            	
-            	<label for="guess">Your guess:</label>
-            	<input type="number" name="guess" id="guess" required="true" value="11"/>
-				
-				<br/>
-            	
-            	<h4>Untouchable Die #4: <span id="d4"></span></h4>
+
+				<h4>Die #3: <span id="d3"></span></h4>
+
+				<label for="guess">Your guess:</label>
+				<input type="number" name="guess" id="guess" required="true" value="11"/>
 
 				<br/>
-				
-            	<input type="button" onclick="diceRoll(d1, d2, d3, d4);" value="Guess" />
-            	
-            	<input type="button" onclick="console.log('This button does not have functionality yet');" value="Try again" />
-            </form>
-            
-            <p>The sum of the 3 dice is: <span id="diceSum"></span></p>
+
+				<h4>Untouchable Die #4: <span id="d4"></span></h4>
+
+				<br/>
+
+				<input type="button" onclick="diceRoll(d1, d2, d3, d4, chancesLeft);" value="Guess" />
+
+				<input type="button" onclick="console.log('This button does not have functionality yet');" value="Try again" />
+			</form>
+
+			<p>The sum of the 3 dice is: <span id="diceSum">0</span></p>
+			
+			<p>Your score this round is: <span id="roundScore">0</span>!</p>
 		</main>
 		<footer>
 			<p>Kod skriven av Sven Parker, 2015-01-21<p>
