@@ -17,8 +17,12 @@
 
 			<form method="get" id="multiplication">
 
-				<p style="float: right;">You have <span id="chancesLeft">10</span> chances left!</p>
-
+				<p class="floatRight" >You have <span id="chancesLeft">10</span> chances left!</p>
+				
+				<p class="floatRight" >Your total score right now is: <span id="totalScore"></span></p>
+				
+				<p class="floatRight red" ><span id="errorDisplay"></span></p>
+				
 				<h4>Die #1: <span id="d1"></span></h4>
 
 				<h4>Die #2: <span id="d2"></span></h4>
@@ -26,7 +30,7 @@
 				<h4>Die #3: <span id="d3"></span></h4>
 
 				<label for="guess">Your guess:</label>
-				<input type="number" name="guess" id="guess" required="true" value="11"/>
+				<input type="number" name="guess" id="guess" required="true" value="4"/>
 
 				<br/>
 
@@ -34,9 +38,9 @@
 
 				<br/>
 
-				<input type="button" onclick="diceRoll(d1, d2, d3, d4, chancesLeft);" value="Guess" />
+				<input type="button" onclick="diceRoll(d1, d2, d3, d4);" value="Guess" />
 
-				<input type="button" onclick="console.log('This button does not have functionality yet');" value="Try again" />
+				<input type="button" onclick="chancesLeft=10;" value="Try again" />
 			</form>
 
 			<p>The sum of the 3 dice is: <span id="diceSum">0</span></p>
