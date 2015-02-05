@@ -9,34 +9,41 @@
 	<body>
 		<header>
 			<h1>The Dice-Game</h1>
+			<div id="notification" class="">
+				<h2 id="errorDisplay" class="red"></h2><a class="close" onclick="close();">X</a>
+			</div>
 		</header>
 		<main>
+			<div id="hidden-notification" class=""></div>
+			
 			<h2>Roll the dice!</h2>
 
 			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
 
 			<form method="get" id="multiplication">
 
-				<p style="float: right;">You have <span id="chancesLeft">10</span> chances left!</p>
+				<p class="floatRight" >You have <span id="chancesLeft">10</span> chances left!</p>
+				
+				<p class="floatRight" >Your total score right now is: <span id="totalScore"></span></p>
+				
+				<h4>Die #1: <div id="d1" class="die"></div></h4>
 
-				<h4>Die #1: <span id="d1"></span></h4>
+				<h4>Die #2: <div id="d2" class="die"></div></h4>
 
-				<h4>Die #2: <span id="d2"></span></h4>
-
-				<h4>Die #3: <span id="d3"></span></h4>
+				<h4>Die #3: <div id="d3" class="die"></div></h4>
 
 				<label for="guess">Your guess:</label>
-				<input type="number" name="guess" id="guess" required="true" value="11"/>
+				<input type="number" name="guess" id="guess" required="true" value="4"/>
 
 				<br/>
 
-				<h4>Untouchable Die #4: <span id="d4"></span></h4>
+				<h4>Untouchable Die #4: <div id="d4" class="die"></div></h4>
 
 				<br/>
 
-				<input type="button" onclick="diceRoll(d1, d2, d3, d4, chancesLeft);" value="Guess" />
+				<input type="button" onclick="diceRoll(d1, d2, d3, d4);" value="Guess" />
 
-				<input type="button" onclick="console.log('This button does not have functionality yet');" value="Try again" />
+				<input type="button" onclick="chancesLeft=10;" value="Try again" />
 			</form>
 
 			<p>The sum of the 3 dice is: <span id="diceSum">0</span></p>
