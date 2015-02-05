@@ -33,6 +33,7 @@ footer {
 	position: absolute;
 	bottom: 0;
 	left: 0;
+	background-color: #AAA;
 }
 
 /*----- Text Formatting -----*/
@@ -71,20 +72,8 @@ header h1 {
 	text-align: center;
 }
 
-/*----- Class Formatting -----*/
-
-.floatRight {
-	float: right;
-	clear: right;
-}
-
-.red {
-	color: red;
-}
-
 /*----- Footer Formatting -----*/
 
 footer p {
 	text-align: center;
-	font-size: 10px;
 }
