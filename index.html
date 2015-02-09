@@ -9,12 +9,12 @@
 	<body>
 		<header>
 			<h1>The Dice-Game</h1>
-			<div id="notification" class="">
-				<h2 id="errorDisplay" class="red"></h2><a class="close" onclick="close();">X</a>
+			<div id="notification" class="hide">
+				<h2 id="errorDisplay" class="red"></h2><a class="close" onclick="errorMessage('','hide');">X</a>
 			</div>
 		</header>
 		<main>
-			<div id="hidden-notification" class=""></div>
+			<div id="hidden-notification" class="hide"></div>
 			
 			<h2>Roll the dice!</h2>
 
@@ -24,7 +24,7 @@
 
 				<p class="floatRight" >You have <span id="chancesLeft">10</span> chances left!</p>
 				
-				<p class="floatRight" >Your total score right now is: <span id="totalScore"></span></p>
+				<p class="floatRight" >Your total score right now is: <span id="totalScore">0</span></p>
 				
 				<h4>Die #1: <div id="d1" class="die"></div></h4>
 
@@ -33,7 +33,7 @@
 				<h4>Die #3: <div id="d3" class="die"></div></h4>
 
 				<label for="guess">Your guess:</label>
-				<input type="number" name="guess" id="guess" required="true" value="4"/>
+				<input type="number" name="guess" id="guess" required="true" value="11"/>
 
 				<br/>
 
@@ -43,15 +43,16 @@
 
 				<input type="button" onclick="diceRoll(d1, d2, d3, d4);" value="Guess" />
 
-				<input type="button" onclick="chancesLeft=10;" value="Try again" />
+				<input type="button" onclick="resetScore(); errorMessage('','hide');" value="Try again" />
+				
 			</form>
 
 			<p>The sum of the 3 dice is: <span id="diceSum">0</span></p>
 			
-			<p>Your score this round is: <span id="roundScore">0</span>!</p>
+			<p>Your score this round is: <span id="roundScore">0</span></p>
 		</main>
 		<footer>
-			<p>Kod skriven av Sven Parker, 2015-01-21<p>
+			<p>&copy; NipSauce, 2015-01-21<p>
 		</footer>
 		
 		<script src="js/js.js" title="scripts" type="text/javascript"></script>
