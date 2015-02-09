@@ -1,10 +1,4 @@
-//Dice-Game script
-/*var die1 = new Number(document.getElementById('d1').value);,
-	die2 = new Number(document.getElementById('d2').value);,
-	die3 = new Number(document.getElementById('d3').value);,
-	die4 = new Number(document.getElementById('d4').value);,
-	dice = [];
-*/
+//diceGame script
 
 function randomizer (bottom, top) {
 	return Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
@@ -28,8 +22,8 @@ function diceRoll (d1,d2,d3,d4){
 			document.getElementById('d4').innerHTML = d4;
 			
 			var diceSum = (d1+d2+d3);
-			console.log("The 3 dice sum is: "+diceSum);
-			console.log("The 4th die shows: "+d4);
+			console.log("diceGame: The 3 dice sum is: "+diceSum);
+			console.log("diceGame: The 4th die shows: "+d4);
 			document.getElementById('diceSum').innerHTML = diceSum;
 					
 			if (guess==diceSum){
@@ -37,16 +31,16 @@ function diceRoll (d1,d2,d3,d4){
 				totalScore += roundScore;
 				document.getElementById('roundScore').innerHTML = roundScore;
 				document.getElementById('totalScore').innerHTML = totalScore;
-				console.log("Your score this round is: "+roundScore);
-				console.log("Correct guess! "+guess+" was right!");
+				console.log("diceGame: Your score this round is: "+roundScore);
+				console.log("diceGame: Correct guess! "+guess+" was right!");
 			}else {
 				document.getElementById('roundScore').innerHTML = roundScore;
 				document.getElementById('totalScore').innerHTML = totalScore;
-				console.log("Incorrect guess, try again.");
+				console.log("diceGame: Incorrect guess, try again.");
 			}
 			chancesLeft--;
 			document.getElementById('chancesLeft').innerHTML = chancesLeft;
-			console.log("You have "+chancesLeft+" chances left");
+			console.log("diceGame: You have "+chancesLeft+" chances left");
 		}else{
 			errorMessage ('Try again please', 'show');
 		}
@@ -77,9 +71,14 @@ function errorMessage (error, showOrHide){
 	document.getElementById('hidden-notification').classList.remove('show');
 	document.getElementById('hidden-notification').classList.add(showOrHide);
 	document.getElementById('errorDisplay').innerHTML = error;
-	console.log(error);
+	if(error==''){
+		console.log(error);
+	}else{
+		console.log('Error: '+error);
+	}
 }
 
+// General visibility classes, WIP
 function close (showOrHide){
 	var divName = document.getElementsByClassName(this).parentNode.nodeName;
 	if (showOrHide=='hide'){
@@ -91,4 +90,21 @@ function close (showOrHide){
 		divName.classList.add('show');
 		console.log("Shows element");
 	}
+}
+
+// Temporary HTML class selection, WIP not working yet
+/*
+var formValidationChecker2 = document.getElementsByTagName('html')[0].classList;
+var formValidationChecker = document.body.parentNode.classList('no-formvalidation');
+if (formValidationChecker=='no-formvalidation') {
+	errorMessage ('You are not using a HTML5 form-validator', 'show');
+	console.log('You are not using a HTML5 form-validator');
+}*/
+
+function hasClass(elem, klass) {
+    return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
+}
+
+if (hasClass(document.body.parentNode, "no-formvalidation")) {
+    errorMessage ('You are not using a HTML5 form-validator', 'show');
 }
