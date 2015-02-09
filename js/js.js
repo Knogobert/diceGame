@@ -80,9 +80,15 @@ function errorMessage (error, showOrHide){
 	console.log(error);
 }
 
-/*function close (){
-	document.getElementById('notification').classList.remove('show');
-	document.getElementById('notification').classList.add('hide');
-	document.getElementById('hidden-notification').classList.remove('show');
-	document.getElementById('hidden-notification').classList.add('hide');
-}*/
+function close (showOrHide){
+	var divName = document.getElementsByClassName(this).parentNode.nodeName;
+	if (showOrHide=='hide'){
+		divName.classList.remove('show');
+		divName.classList.add('hide');
+		console.log("Hides element");
+	}else{
+		divName.classList.remove('hide');
+		divName.classList.add('show');
+		console.log("Shows element");
+	}
+}

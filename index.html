@@ -13,6 +13,38 @@
 				<h2 id="errorDisplay" class="red"></h2><a class="close" onclick="errorMessage('','hide');">X</a>
 			</div>
 		</header>
+		<div id="popUpBG" class="popUpBG">
+			<div class="popUp centerDiv">
+				<form method="get" id="userInfo">
+					<h2>Enter your user info</h2>
+					
+					<label for="fName">First name:</label>
+					<input type="text" name="fName" id="fName" required placeholder="Herr" autofocus />
+					<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
+					
+					<br/>
+					
+					<label for="lName">Last name:</label>
+					<input type="text" name="lName" id="lName" required placeholder="Balle"/>
+					
+					<br/>
+					
+					<label for="eMail">E-mail:</label>
+					<input type="email" name="eMail" id="eMail" required placeholder="thereal@herrballe.com"/>
+					
+					<br/>
+					
+					<label for="pass">Password:</label>
+					<input type="password" name="pass" id="pass" required placeholder="password"/>
+					
+					<br/>
+					
+					<input type="button" onclick="document.getElementById('popUpBG').classList.add('hide');" value="Close w/ var" />
+					<input type="button" onclick="close('hide');" value="Close w/ function" />
+					
+				</form>
+			</div>
+		</div>
 		<main>
 			<div id="hidden-notification" class="hide"></div>
 			
@@ -20,7 +52,7 @@
 
 			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
 
-			<form method="get" id="multiplication">
+			<form method="get" id="diceGame">
 
 				<p class="floatRight" >You have <span id="chancesLeft">10</span> chances left!</p>
 				
@@ -33,7 +65,7 @@
 				<h4>Die #3: <div id="d3" class="die"></div></h4>
 
 				<label for="guess">Your guess:</label>
-				<input type="number" name="guess" id="guess" required="true" value="11"/>
+				<input type="number" name="guess" id="guess" min="3" max="18" step="1" value="11" required/>
 
 				<br/>
 
