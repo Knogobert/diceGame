@@ -21,6 +21,7 @@ body {
 	top: 0;
 	left: 0;
 	background-color: #EEE;
+	min-width: 320px;
 }
 
 header {
@@ -32,6 +33,7 @@ header {
 
 main {
 	margin: 0 auto;
+	padding: 0 10px;
 	max-width: 800px;
 	z-index: 10;
 }
@@ -81,7 +83,7 @@ header h1 {
 	z-index: 300;
 }
 
-/*----- Class Formatting -----*/
+/*----- General Class Formatting -----*/
 
 .centerDiv {
 	margin: auto;
@@ -136,22 +138,31 @@ div.die {
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
-	background-color: #AAA;
+}
+
+.requiredInput:after {
+	content: "*";
+	color: red;
+	position: relative;
+	right: 17px;
+	top: 3px;
 }
 
 .popUp {
-	border: solid 1px black;
-	border-radius: 5px;
 	position: fixed;
-	background-color: white;
+	background-color:rgba(255,255,255,0.9);
+	border: 20px solid rgba(0,0,0,0.75);
+	-webkit-border-radius: 40px;
+	   -moz-border-radius: 40px;
+			border-radius: 40px;
 	z-index: 1000;
-	width: 600px;
+	max-width: 600px;
 	height: 300px;
 	/* Adds .centerDiv which centers the div */
 }
 
 .popUpBG {
-	background-color: rgba(0,0,0,0.35);
+	background-color: rgba(0,0,0,0.3);
 	position: fixed;
 	top: 0;
 	left: 0;

@@ -19,26 +19,29 @@
 				<form method="get" id="userInfo">
 					<h2>Enter your user info</h2>
 					
-					<label for="fName">First name:</label>
-					<input type="text" name="fName" id="fName" required placeholder="Herr" autofocus />
-					<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
-					
+					<div class="requiredInput">
+						<label for="fName">First name:</label>
+						<input type="text" name="fName" id="fName" required placeholder="Herr" autofocus />
+						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
+					</div>
+					<br/>
+					<div class="requiredInput">
+						<label for="lName">Last name:</label>
+						<input type="text" name="lName" id="lName" required placeholder="Balle"/>
+					</div>
+					<br/>
+					<div class="requiredInput">
+						<label for="eMail">E-mail:</label>
+						<input type="email" name="eMail" id="eMail" required placeholder="thereal@herrballe.com"/>
+					</div>
+					<br/>
+					<div class="requiredInput">
+						<label for="pass">Password:</label>
+						<input type="password" name="pass" id="pass" required placeholder="password"/>
+					</div>
 					<br/>
 					
-					<label for="lName">Last name:</label>
-					<input type="text" name="lName" id="lName" required placeholder="Balle"/>
-					
-					<br/>
-					
-					<label for="eMail">E-mail:</label>
-					<input type="email" name="eMail" id="eMail" required placeholder="thereal@herrballe.com"/>
-					
-					<br/>
-					
-					<label for="pass">Password:</label>
-					<input type="password" name="pass" id="pass" required placeholder="password"/>
-					
-					<br/>
+					<input type="button" onclick="submitUserInfo();" value="Submit" />
 					
 					<input type="button" onclick="document.getElementById('popUpBG').classList.add('hide');" value="Close w/ var" />
 					<input type="button" onclick="close('hide');" value="Close w/ function" />
