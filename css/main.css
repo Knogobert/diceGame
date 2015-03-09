@@ -115,6 +115,27 @@ header h1 {
 	display: block !important;
 }
 
+.actionButton {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	height: 30px;
+	width: 30px;
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.75);
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px; /* future proofing */
+	-khtml-border-radius: 20px; /* for old Konqueror browsers */
+	margin: 0;
+	padding: 0;
+	color: rgb(255,255,255);
+}	.actionButton > p {
+		text-align: center;
+		margin-top: 5px;
+		color: rgb(255,255,255);
+	}
+
 /*----- Dice Formatting -----*/
 
 div.die {
@@ -140,12 +161,25 @@ div.die {
 	transform: translateY(-50%);
 }
 
+#userInfo input {
+	min-width: 65%;
+}
+#userInfo input[type="button"], #userInfo input[type="submit"] {
+	width: auto;
+}
+
+form label:after { /* Adds colon to all labels within a form */
+    content:":";
+}
+
 .requiredInput:after {
 	content: "*";
 	color: red;
 	position: relative;
-	right: 17px;
-	top: 3px;
+	float: right;
+	right: 5px;
+	top: 5px;
+	z-index: 500;
 }
 
 .popUp {
@@ -175,6 +209,13 @@ div.die {
 	transform-style: preserve-3d;
 }
 
+/*----- highScore Formatting -----*/
+
+.highScoreWrap {
+	width: 300px;
+	overflow: hidden;
+}
+
 /*----- errorDisplay Formatting -----*/
 
 #notification {
@@ -183,7 +224,7 @@ div.die {
     top: 0;
     left: 0;
     right: 0;
-    background: #fde073;
+    background: #fff;
     text-align: center;
     overflow: hidden;
 	/*-webkit-box-shadow: 0 0 5px black;

@@ -42,10 +42,10 @@ function diceRoll (d1,d2,d3,d4){
 			document.getElementById('chancesLeft').innerHTML = chancesLeft;
 			console.log("diceGame: You have "+chancesLeft+" chances left");
 		}else{
-			errorMessage ('Try again please', 'show');
+			errorMessage ('Try again', 'show');
 		}
 	}else{
-		errorMessage ('Enter a number between 3 and 18 dumb-schmuck!!', 'show');
+		errorMessage ('Enter a number between 3 and 18', 'show');
 	}
 }
 
@@ -80,31 +80,100 @@ function errorMessage (error, showOrHide){
 
 // General visibility classes, WIP
 function close (showOrHide){
-	var divName = document.getElementsByClassName(this).parentNode.nodeName;
+	var divName = element.getElementsByTagName(this)[0].nodeName;
 	if (showOrHide=='hide'){
 		divName.classList.remove('show');
 		divName.classList.add('hide');
-		console.log("Hides element");
+		console.log("Hiding element");
 	}else{
 		divName.classList.remove('hide');
 		divName.classList.add('show');
-		console.log("Shows element");
+		console.log("Showing element");
 	}
 }
 
-// Temporary HTML class selection, WIP not working yet
-/*
-var formValidationChecker2 = document.getElementsByTagName('html')[0].classList;
-var formValidationChecker = document.body.parentNode.classList('no-formvalidation');
-if (formValidationChecker=='no-formvalidation') {
-	errorMessage ('You are not using a HTML5 form-validator', 'show');
-	console.log('You are not using a HTML5 form-validator');
-}*/
-
+//Checks the element if it has a certain class or not
 function hasClass(elem, klass) {
     return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
 }
 
+function submitUserInfo(){
+	if (hasClass(document.body.parentNode, "no-formvalidation")) {
+		errorMessage ('You are not using a HTML5 form-validator', 'show');
+		H5F.setup(document.getElementsByTagName('form'), {
+			onSubmit:document.getElementById('popUpBG').classList.add('hide')
+			//onInvalid: function (invalidInputElement) {}
+		});
+	}
+}
+
+/*
+//Checks for the class "no-formvalidation"
 if (hasClass(document.body.parentNode, "no-formvalidation")) {
     errorMessage ('You are not using a HTML5 form-validator', 'show');
+    H5F.setup(document.getElementsByTagName('form'));
+}*/
+
+function ajaxRequest(url, callback) {
+    var XHR = null;
+    if (XMLHttpRequest) {
+		XHR = new XMLHttpRequest();
+	} else {
+		XHR = new ActiveXObject("Microsoft.XMLHTTP"); 
+	}
+	XHR.onreadystatechange = function () {
+		if (XHR.readyState == 4 || XHR.readyState == "complete") {
+			if (XHR.status == 200) {
+				callback(XHR); 
+			} else {
+				alert("fel på servern");
+			}
+		}
+	}
+    XHR.open("GET", url, true);
+    XHR.send(null);
 }
+function JSONPRequest(url) {
+    var s = document.createElement('script');
+    s.setAttribute('src', url);
+    document.getElementsByTagName('head')[0].appendChild(s);
+}
+function get(){
+	ajaxRequest('data.txt', 'highscore');
+}
+
+var clickCount = 0;
+function getHighscore(){
+	if (clickCount<1){
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=highscore');
+		clickCount++;
+		console.log("writeHighscore");
+	}else{
+		alert("STOP Clicken!")
+	}
+}
+function highscore(data){
+	console.log(data);
+	for (var i=0;i<data.scores.length;i++){
+		var name= document.createElement('h4');
+		name.innerHTML=data.scores[i].name;
+		name.className="floatLeft";
+		
+		var point=document.createElement('span');
+		point.innerHTML=data.scores[i].points;
+		point.className="floatLeft";
+		
+		var timestamp=document.createElement('span');
+		timestamp.innerHTML=data.scores[i].timestamp;
+		timestamp.className="floatRight";
+		
+		var highscoreList=document.getElementById('highscoreList');
+		highscoreList.appendChild(name);
+		highscoreList.appendChild(point);
+		highscoreList.appendChild(timestamp);
+		}
+}
+
+
+
+
