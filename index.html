@@ -19,7 +19,7 @@
 				<div class="actionButton"><p class="close" onclick="errorMessage('','hide');">X</p></div>
 			</div>
 		</header>
-		<div id="popUpBG" class="popUpBG">
+		<div id="popUpBG" class="popUpBG "><!--add "hide" as class to hide popup-->
 			<div class="popUp centerDiv">
 				<div class="actionButton" onclick="document.getElementById('popUpBG').classList.add('hide');"><p>X</p></div>
 				<form method="get" id="userInfo">
@@ -33,7 +33,7 @@
 					<br/>
 					<div class="requiredInput">
 						<label for="lName">Last name</label>
-						<input type="text" name="lName" class="floatRight" id="lName" pattern="[a-zA-Z]+" required class="requiredInput" placeholder="Balle"/>
+						<input type="text" name="lName" class="floatRight" id="lName" pattern="[a-zA-Z]+" required  placeholder="Balle"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
@@ -43,7 +43,7 @@
 					<br/>
 					<div class="requiredInput">
 						<label for="pass">Password</label>
-						<input type="password" name="pass" class="floatRight" id="pass" min="6" max="32" pattern=".{6,}" required placeholder="password, at least 6 characters"/>
+						<input type="password" name="pass" class="floatRight" id="pass" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters"/>
 					</div>
 					<br/>
 					
@@ -61,7 +61,7 @@
 
 			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
 
-			<form method="get" id="diceGame">
+			<form id="diceGame" method="get">
 
 				<p class="floatRight">You have <span id="chancesLeft">10</span> chances left!</p>
 				
@@ -69,29 +69,33 @@
 				
 				<div class="highScoreWrap floatRight">				
 					<input type="button" onclick="getHighscore()" value="Get Highscore"/>
-					<div id="highscoreList"></div>
-					
-					<input type="button" value="Visa" onclick="show()" />
-					<input type="button" value="Dölj" />
-					<input type="button" value="Hämta" onclick="get()" />
+					<div id="highscoreList" class="floatRight"></div>
+					<input type="button" value="Hide" onclick="removeHighscoreList();" />
+					<input type="button" value="Get(WIP)" onclick="get()" />
 				</div>
 				
-				<h4>Die #1: <div id="d1" class="die"></div></h4>
-
-				<h4>Die #2: <div id="d2" class="die"></div></h4>
-
-				<h4>Die #3: <div id="d3" class="die"></div></h4>
-
-				<label for="guess">Your guess:</label>
+				<ol>
+					<li>
+						<h4>Die #1: </h4><div id="d1" class="die"><p>.</p></div>
+					</li>
+					<li>
+						<h4>Die #2: </h4><div id="d2" class="die"><p>..</p></div>
+					</li>
+					<li>
+						<h4>Die #3: </h4><div id="d3" class="die"><p>.:</p></div>
+					</li>
+				</ol>
+				
+				<label for="guess">Your guess</label>
 				<input type="number" name="guess" id="guess" min="3" max="18" step="1" value="11" required/>
 
 				<br/>
 
-				<h4>Untouchable Die #4: <div id="d4" class="die"></div></h4>
+				<h4>Untouchable Die #4: </h4><div id="d4" class="die"><p>::</p></div>
 
 				<br/>
 
-				<input type="button" onclick="diceRoll(d1, d2, d3, d4);" value="Guess" />
+				<input type="button" onclick="diceRoll();" value="Guess" />
 
 				<input type="button" onclick="resetScore(); errorMessage('','hide');" value="Try again" />
 				

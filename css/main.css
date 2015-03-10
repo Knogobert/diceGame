@@ -36,6 +36,7 @@ main {
 	padding: 0 10px;
 	max-width: 800px;
 	z-index: 10;
+	overflow: hidden;
 }
 
 footer {
@@ -47,7 +48,7 @@ footer {
 
 /*----- Text Formatting -----*/
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6{
 	font-family: 'Maven Pro', sans-serif;
 }
 
@@ -61,6 +62,21 @@ h3 {
 	color: #999;
 }
 
+h4 {
+	margin: 3px 0;
+	display: inline-block;
+}
+
+h5 {
+	margin: 5px 0 0;
+	font-size: 12pt;
+}
+
+h6 {
+	margin: 0;
+	font-size: 10pt;
+}
+
 p, a, label, button {
 	font-family: 'Lato', sans-serif;
 }
@@ -72,6 +88,12 @@ p {
 a.close {
 	cursor: pointer;
 	z-index: 200;
+}
+
+ol, ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 /*----- Header Formatting -----*/
@@ -139,12 +161,18 @@ header h1 {
 /*----- Dice Formatting -----*/
 
 div.die {
+	margin: 5px;
 	padding: 5px;
 	height: 20px;
 	width: 20px;
 	border: 1px solid black;
 	border-radius: 5px;
 	text-align: center;
+	display: inline-block;
+	
+	font-family: 'Lato', sans-serif;
+} div.die > p {
+	margin: 0;	
 }
 
 /*----- popUp Formatting -----*/

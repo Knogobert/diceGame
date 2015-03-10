@@ -8,7 +8,7 @@ var roundScore = 0;
 var totalScore = 0;
 var chancesLeft = 10;
 
-function diceRoll (d1,d2,d3,d4){
+function diceRoll (){
 	var guess = new Number(document.getElementById('guess').value);
 	if ( guess >= 3 && guess <= 18 ){
 		if (chancesLeft>0){
@@ -16,7 +16,7 @@ function diceRoll (d1,d2,d3,d4){
 			var d2 = randomizer (1, 6);
 			var d3 = randomizer (1, 6);
 			var d4 = randomizer (1, 6);
-			document.getElementById('d1').innerHTML = d1;
+			document.getElementById('d1').innerHTML = "<p>"+d1+"</p>";
 			document.getElementById('d2').innerHTML = d2;
 			document.getElementById('d3').innerHTML = d3;
 			document.getElementById('d4').innerHTML = d4;
@@ -143,11 +143,19 @@ function get(){
 }
 
 var clickCount = 0;
+var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){
 	if (clickCount<1){
 		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=highscore');
 		clickCount++;
-		console.log("writeHighscore");
+	}else{
+		alert("STOP Clicken!")
+	}
+}
+function removeHighscoreList(){
+	if (clickCount!=0){
+		highscoreList.innerHTML = "";
+		clickCount=0;
 	}else{
 		alert("STOP Clicken!")
 	}
@@ -155,19 +163,18 @@ function getHighscore(){
 function highscore(data){
 	console.log(data);
 	for (var i=0;i<data.scores.length;i++){
-		var name= document.createElement('h4');
+		var name= document.createElement('h5');
 		name.innerHTML=data.scores[i].name;
 		name.className="floatLeft";
 		
-		var point=document.createElement('span');
-		point.innerHTML=data.scores[i].points;
+		var point=document.createElement('h6');
+		point.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 		point.className="floatLeft";
 		
-		var timestamp=document.createElement('span');
+		var timestamp=document.createElement('h6');
 		timestamp.innerHTML=data.scores[i].timestamp;
 		timestamp.className="floatRight";
 		
-		var highscoreList=document.getElementById('highscoreList');
 		highscoreList.appendChild(name);
 		highscoreList.appendChild(point);
 		highscoreList.appendChild(timestamp);
