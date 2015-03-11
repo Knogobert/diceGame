@@ -53,10 +53,10 @@ function resetScore(){
 	totalScore = 0;
 	roundScore = 0;
 	chancesLeft = 10;
-	document.getElementById('d1').innerHTML = '';
-	document.getElementById('d2').innerHTML = '';
-	document.getElementById('d3').innerHTML = '';
-	document.getElementById('d4').innerHTML = '';
+	document.getElementById('d1').innerHTML = '.';
+	document.getElementById('d2').innerHTML = '..';
+	document.getElementById('d3').innerHTML = '.:';
+	document.getElementById('d4').innerHTML = '::';
 	document.getElementById('diceSum').innerHTML = '0';
 	document.getElementById('roundScore').innerHTML = '0';
 	document.getElementById('totalScore').innerHTML = '0';
@@ -141,7 +141,43 @@ function JSONPRequest(url) {
 function get(){
 	ajaxRequest('data.txt', 'highscore');
 }
+// Create user
+function createUser(){
+	//temporary
+	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
+	if (clickCount<1){
+		
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
+		clickCount++;
+	}else{
+		alert("STOP Clicken!")
+	}
+}
+// Login user
+function loginUser(){
+	if (clickCount<1){
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?callback=loginUserId');
+		clickCount++;
+	}else{
+		alert("STOP Clicken!")
+	}
+}
+function createUserId(response){
 
+console.log(response);
+
+//response.status
+	return false;
+
+	if (response.status==400){
+		console.log("USER CREATED!");
+	}else if (response.status==200){
+		console.log("USER NOT CREATED!");
+	}else {
+		console.log("This is the else statement");
+	}
+}
+// Highscore List gets data from server and writes it out.
 var clickCount = 0;
 var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){

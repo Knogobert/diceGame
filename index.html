@@ -26,28 +26,29 @@
 					<h2>Enter your user info</h2>
 					
 					<div class="requiredInput">
-						<label for="fName">First name</label>
-						<input type="text" name="fName" class="floatRight" id="fName" pattern="[a-zA-Z]+" required placeholder="Herr" autofocus />
+						<label for="firstname">First name</label>
+						<input type="text" name="firstname" class="floatRight" id="fName" pattern="[a-zA-Z]+" required value="Herr" autofocus />
 						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="lName">Last name</label>
-						<input type="text" name="lName" class="floatRight" id="lName" pattern="[a-zA-Z]+" required  placeholder="Balle"/>
+						<label for="lastname">Last name</label>
+						<input type="text" name="lastname" class="floatRight" id="lName" pattern="[a-zA-Z]+" required  value="Balle"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="eMail">E-mail</label>
-						<input type="email" name="eMail" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required placeholder="thereal@herrballe.com"/>
+						<label for="email">E-mail</label>
+						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required value="thereal@herrballe.com"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="pass">Password</label>
-						<input type="password" name="pass" class="floatRight" id="pass" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters"/>
+						<label for="pwd">Password</label>
+						<input type="password" name="pwd" class="floatRight" id="pass" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters" value="herrballe"/>
 					</div>
 					<br/>
 					
-					<input type="submit" onclick="submitUserInfo();" value="Submit" />
+					<input type="submit" onclick="createUser();" value="Create User" />
+					<input type="submit" onclick="loginUser();" value="Login User" />
 					
 					<input type="button" onclick="close('hide');" value="Close w/ function" />
 					
