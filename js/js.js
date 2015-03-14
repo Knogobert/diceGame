@@ -63,6 +63,7 @@ function resetScore(){
 	document.getElementById('chancesLeft').innerHTML = 10;
 }
 
+// Error messaging
 function errorMessage (error, showOrHide){
 	document.getElementById('notification').classList.remove('hide');
 	document.getElementById('notification').classList.remove('show');
@@ -76,6 +77,15 @@ function errorMessage (error, showOrHide){
 	}else{
 		console.log('Error: '+error);
 	}
+}
+
+function reportErrors(errors){
+ var msg = "Please Enter Valid Data...\n";
+ for (var i = 0; i<errors.length; i++) {
+ var numError = i + 1;
+  msg += "\n" + numError + ". " + errors[i];
+}
+ alert(msg);
 }
 
 // General visibility classes, WIP
@@ -114,6 +124,7 @@ if (hasClass(document.body.parentNode, "no-formvalidation")) {
     H5F.setup(document.getElementsByTagName('form'));
 }*/
 
+// AJAX request, works only on same server
 function ajaxRequest(url, callback) {
     var XHR = null;
     if (XMLHttpRequest) {
@@ -126,7 +137,7 @@ function ajaxRequest(url, callback) {
 			if (XHR.status == 200) {
 				callback(XHR); 
 			} else {
-				alert("fel på servern");
+				alert("Server problems.");
 			}
 		}
 	}
@@ -141,33 +152,89 @@ function JSONPRequest(url) {
 function get(){
 	ajaxRequest('data.txt', 'highscore');
 }
+// Validation
+var checkName = /^[A-ZÅÄÖa-zåäö]{2,20}$/;
+var checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i ;
+var checkPassword =  /^[A-ZÅÄÖa-zåäö0-9!@#$%^&*()_]{6,32}$/;
+
+function regvalidate(firstform){
+	firstform.preventDefault();
+	var firstname = document.getElementById("firstname").value;
+	var lastname = document.getElementById("lastname").value;
+	var email = document.getElementById("email").value;
+	var password =  document.getElementById("password").value;
+	
+	console.log(password);
+	var errors = [];
+
+	if (!checkName.test(firstname)) {
+		errors[errors.length] = "You didn't enter a correct first name";
+	}
+	if (!checkName.test(lastname)) {
+		errors[errors.length] = "You didn't enter a correct last name";
+	}
+	if (!checkEmail.test(email)) {
+		errors[errors.length] = "You didn't enter a correct e-mail";
+	}
+	if (!checkPassword.test(password)) {
+		errors[errors.length] = "You didn't enter a correct password, at least 6 characters!";
+	}
+
+	if (errors.length > 0) {
+		return false;
+	}
+	console.log('VALIDATION WORKS');
+		return true;
+}
+//document.getElementById("userInfoCreate").addEventListener("submit", validate);
+
 // Create user
+var createClicks = 0;
 function createUser(){
 	//temporary
 	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
-	if (clickCount<1){
+	if (createClicks<1){
 		
 		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
-		clickCount++;
+		
+		var firstname = document.getElementById("fName").value;
+		var lastname = document.getElementById("lName").value;
+		var email = document.getElementById("eMail").value;
+		var password =  document.getElementById("pass").value;
+		
+		var url='http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname;
+
+		//ajaxRequest(url, createUserId);
+		
+		createClicks++;
 	}else{
 		alert("STOP Clicken!")
 	}
 }
 // Login user
+var loginClicks = 0;
 function loginUser(){
-	if (clickCount<1){
+	if (loginClicks<1){
 		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?callback=loginUserId');
-		clickCount++;
+		loginClicks++;
 	}else{
 		alert("STOP Clicken!")
 	}
 }
 function createUserId(response){
 
-console.log(response);
-
-//response.status
-	return false;
+	console.log(response);
+	
+	var ans=JSON.parse(response.responseText);
+	if(ans.message=="user created"){
+		alert('User created');
+	}
+	else{
+		alert('User already exists');
+	}
+	
+	//response.status
+	//return false;
 
 	if (response.status==400){
 		console.log("USER CREATED!");
@@ -178,20 +245,20 @@ console.log(response);
 	}
 }
 // Highscore List gets data from server and writes it out.
-var clickCount = 0;
+var highscoreClicks = 0;
 var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){
-	if (clickCount<1){
+	if (highscoreClicks<1){
 		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=highscore');
-		clickCount++;
+		highscoreClicks++;
 	}else{
 		alert("STOP Clicken!")
 	}
 }
 function removeHighscoreList(){
-	if (clickCount!=0){
+	if (highscoreClicks!=0){
 		highscoreList.innerHTML = "";
-		clickCount=0;
+		highscoreClicks=0;
 	}else{
 		alert("STOP Clicken!")
 	}

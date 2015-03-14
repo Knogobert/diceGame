@@ -85,6 +85,17 @@ p {
 	
 }
 
+a, a:visited, a:active {
+	color: #FE5000;
+	text-decoration: none;
+} a:hover {
+	color: #FE5000;
+}
+
+a.formLink {
+	color: #000;
+}
+
 a.close {
 	cursor: pointer;
 	z-index: 200;
@@ -125,8 +136,8 @@ header h1 {
 	clear: right;
 }
 
-.red {
-	color: red;
+.orange {
+	color: #FE5000;
 }
 
 .hide {
@@ -137,7 +148,22 @@ header h1 {
 	display: block !important;
 }
 
-.actionButton {
+.button{
+	border:solid 1px;
+	border-radius: 15px;
+	padding:10px;
+	cursor: pointer;
+	text-transform: uppercase;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.button:hover{
+	background-color: #000;
+	color:#fff;
+}
+
+.closeButton {
 	position: absolute;
 	left: 5px;
 	top: 5px;
@@ -152,7 +178,7 @@ header h1 {
 	margin: 0;
 	padding: 0;
 	color: rgb(255,255,255);
-}	.actionButton > p {
+}	.closeButton > p {
 		text-align: center;
 		margin-top: 5px;
 		color: rgb(255,255,255);
@@ -177,7 +203,7 @@ div.die {
 
 /*----- popUp Formatting -----*/
 
-#userInfo {
+#userInfoCreate {
 	position: relative;
 	height: 80%;
 	width: 80%;
@@ -189,11 +215,17 @@ div.die {
 	transform: translateY(-50%);
 }
 
-#userInfo input {
+#userInfoCreate input[type="email"], #userInfoCreate input[type="text"], #userInfoCreate input[type="password"] {
 	min-width: 65%;
 }
-#userInfo input[type="button"], #userInfo input[type="submit"] {
-	width: auto;
+
+#userInfoCreate .submitButtonWrap {
+	width: 100%;
+}
+
+#userInfoCreate .submitButton {
+	display: block;
+	margin: 0 auto;
 }
 
 form label:after { /* Adds colon to all labels within a form */
@@ -202,7 +234,7 @@ form label:after { /* Adds colon to all labels within a form */
 
 .requiredInput:after {
 	content: "*";
-	color: red;
+	color: #FE5000;
 	position: relative;
 	float: right;
 	right: 5px;
@@ -252,7 +284,7 @@ form label:after { /* Adds colon to all labels within a form */
     top: 0;
     left: 0;
     right: 0;
-    background: #fff;
+    background: #FE5000;
     text-align: center;
     overflow: hidden;
 	/*-webkit-box-shadow: 0 0 5px black;
@@ -264,6 +296,10 @@ form label:after { /* Adds colon to all labels within a form */
 	top:0;
 	height: 50px;
 	width: 100%;
+}
+
+#errorDisplay {
+	color: #FFF;
 }
 
 /*----- Footer Formatting -----*/
