@@ -22,8 +22,8 @@
 		<div id="popUpBG" class="popUpBG "><!--add "hide" as class to hide popup-->
 			<div class="popUp centerDiv">
 				<div class="closeButton" onclick="document.getElementById('popUpBG').classList.add('hide');"><p>X</p></div>
-				<form method="get" id="userInfoCreate">
-					<h2>Enter your user info</h2>
+				<form method="get" id="userInfoCreate" class="userInfoForm hide">
+					<h2>Create User</h2>
 					
 					<div class="requiredInput">
 						<label for="firstname">First name</label>
@@ -48,16 +48,16 @@
 					<br/>
 					<div class="submitButtonWrap">
 						<input class="button submitButton" type="submit" onclick="createUser();" value="Create User" />
-						<a href="#">Already a user?</a> 
+						<a href="#" class="centerTextLink" onclick="swap('userInfoLogin','userInfoCreate');" >Already a user?</a> 
 					</div>
 					
 					<br />
 					
-					<input class="button" type="button" onclick="close('hide');" value="Close w/ function" />
+					<input class="button" type="button" onclick="close('hide');" value="Close w/ function" style="position: absolute; right: 5px; top: 5px;"/>
 					
 				</form>
-				<form method="get" id="userInfoLogin" class="hide">
-					<h2>Enter your login info</h2>
+				<form method="get" id="userInfoLogin" class="userInfoForm show">
+					<h2>Log In</h2>
 					
 					<div class="requiredInput">
 						<label for="email">E-mail</label>
@@ -72,11 +72,12 @@
 					<br/>
 					<div class="submitButtonWrap">
 						<input class="button submitButton" type="submit" onclick="loginUser();" value="Log In" />
+						<a href="#" class="centerTextLink" onclick="swap('userInfoCreate','userInfoLogin');" >Haven't created a user yet?</a> 
 					</div>
 					
 					<br />
 					
-					<input class="button" type="button" onclick="close('hide');" value="Close w/ function" />
+					<input class="button" type="button" onclick="close('hide');" value="Close w/ function" style="position: absolute; right: 5px; top: 5px;"/>
 					
 				</form>
 			</div>

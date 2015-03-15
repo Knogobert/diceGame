@@ -80,12 +80,13 @@ function errorMessage (error, showOrHide){
 }
 
 function reportErrors(errors){
- var msg = "Please Enter Valid Data...\n";
- for (var i = 0; i<errors.length; i++) {
- var numError = i + 1;
-  msg += "\n" + numError + ". " + errors[i];
-}
- alert(msg);
+	var msg = "Please Enter Valid Data...\n";
+	for (var i = 0; i<errors.length; i++) {
+		var numError = i + 1;
+		msg += "\n" + numError + ". " + errors[i];
+		console.log(msg);
+	}
+	alert(msg);
 }
 
 // General visibility classes, WIP
@@ -101,6 +102,14 @@ function close (showOrHide){
 		console.log("Showing element");
 	}
 }
+
+function swap(showObject, hideObject) {
+    document.getElementById(showObject).classList.add('show');
+    document.getElementById(showObject).classList.remove('hide');
+    
+    document.getElementById(hideObject).classList.add('hide');
+    document.getElementById(hideObject).classList.remove('show');
+}//not working
 
 //Checks the element if it has a certain class or not
 function hasClass(elem, klass) {

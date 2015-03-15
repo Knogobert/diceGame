@@ -92,10 +92,6 @@ a, a:visited, a:active {
 	color: #FE5000;
 }
 
-a.formLink {
-	color: #000;
-}
-
 a.close {
 	cursor: pointer;
 	z-index: 200;
@@ -124,6 +120,10 @@ header h1 {
 	left: 0;
 	right: 0;
 	bottom: 0;
+}
+
+.centerTextLink {
+	text-align: center;
 }
 
 .floatLeft {
@@ -203,7 +203,7 @@ div.die {
 
 /*----- popUp Formatting -----*/
 
-#userInfoCreate {
+.userInfoForm {
 	position: relative;
 	height: 80%;
 	width: 80%;
@@ -215,16 +215,23 @@ div.die {
 	transform: translateY(-50%);
 }
 
-#userInfoCreate input[type="email"], #userInfoCreate input[type="text"], #userInfoCreate input[type="password"] {
+.userInfoForm input[type="email"], .userInfoForm input[type="text"], .userInfoForm input[type="password"] {
 	min-width: 65%;
 }
 
-#userInfoCreate .submitButtonWrap {
+.userInfoForm .submitButtonWrap {
 	width: 100%;
+	position: fixed;
+	bottom: 0;
 }
 
-#userInfoCreate .submitButton {
+.userInfoForm .submitButton {
 	display: block;
+	margin: 0 auto;
+}
+
+.userInfoForm a {
+	clear: both;
 	margin: 0 auto;
 }
 
