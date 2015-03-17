@@ -91,7 +91,7 @@ function reportErrors(errors){
 
 // General visibility classes, WIP
 function close (showOrHide){
-	var divName = element.getElementsByTagName(this)[0].nodeName;
+	var divName = element.this.nodeName;
 	if (showOrHide=='hide'){
 		divName.classList.remove('show');
 		divName.classList.add('hide');
