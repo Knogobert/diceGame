@@ -90,33 +90,43 @@ function reportErrors(errors){
 }
 
 // General visibility classes, WIP
-function close (showOrHide){
-	var divName = element.this.nodeName;
-	if (showOrHide=='hide'){
+function scruub(that, showOrHide){
+	console.log('AOISHFLKASFNAL');
+	var divName = that.parentNode.parentNode;
+	var divParent = that.parentNode;
+	if(showOrHide=='hide'){
 		divName.classList.remove('show');
 		divName.classList.add('hide');
+		divParent.classList.remove('show');
+		divParent.classList.add('hide');
 		console.log("Hiding element");
 	}else{
 		divName.classList.remove('hide');
 		divName.classList.add('show');
+		divParent.classList.remove('hide');
+		divParent.classList.add('show');
 		console.log("Showing element");
 	}
 }
 
 // swaps between the Create User and Login 
 function swap(showObject, hideObject) {
+	document.getElementById(hideObject).classList.add('hide');
+    document.getElementById(hideObject).classList.remove('show');
+    
     document.getElementById(showObject).classList.add('show');
     document.getElementById(showObject).classList.remove('hide');
-    
-    document.getElementById(hideObject).classList.add('hide');
-    document.getElementById(hideObject).classList.remove('show');
 }
 
 // For the Create User or Login buttons on the main page
 function showUserInfo(showCreateOrLogin, hideCreateOrLogin){
 	document.getElementById('popUpBG').classList.add('show');
+	
+	document.getElementById('userInfo'+hideCreateOrLogin).classList.add('hide');
+    document.getElementById('userInfo'+hideCreateOrLogin).classList.remove('show');
+    
 	document.getElementById('userInfo'+showCreateOrLogin).classList.add('show');
-    document.getElementById('userInfo'+hideCreateOrLogin).classList.remove('hide');
+	document.getElementById('userInfo'+showCreateOrLogin).classList.remove('hide');
 }
 
 //Checks the element if it has a certain class or not
@@ -233,7 +243,7 @@ function createUser(e){
 		console.log(response.message);
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
 		var ans=response.message;
-		if(ans=="user created"){
+		/*if(ans=="user created"){
 			alert('User created');
 		}else if (ans=="failed to create user"){
 			alert('Failed to create user');
@@ -242,7 +252,7 @@ function createUser(e){
 		else{
 			alert('User already exists');
 			return false;
-		}
+		}*/
 	
 		if (response.status==400){
 			console.log("USER CREATED!");
@@ -253,17 +263,18 @@ function createUser(e){
 		}
 		
 	}
-// När register form submitas startar functionen createuser
+// When the forms submit button is clicked the function createUser is run
 	document.getElementById("userInfoCreate").addEventListener("submit", createUser, false);
 
 // Login user
 var loginClicks = 0;
-function loginUser(){
+function loginUser(e){
+	e.preventDefault();
 	if (loginClicks<1){
 		var email = document.getElementById("eMailLogin").value;
 		var password =  document.getElementById("passLogin").value;
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
-		//var url='http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
+		//var url='http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 		loginClicks++;
 	}else{
 		alert("STOP Clicken!")
@@ -272,26 +283,30 @@ function loginUser(){
 	function loginUserId(response){
 	
 		console.log(response);
-		
-		var ans=JSON.parse(response.responseText);
-		if(ans.message=="user created"){
+		console.log(response.message);
+		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
+		var ans=response.message;
+		/*if(ans.message=="user created"){
 			alert('User logged in');
 		}
 		else{
 			alert('User already exists');
 		}
-		
+		*/
 		//response.status
 		//return false;
 	
 		if (response.status==400){
-			console.log("USER CREATED!");
+			console.log("Successfully logged in user");
 		}else if (response.status==200){
-			console.log("USER NOT CREATED!");
+			console.log("Couldn't successfully log in user");
 		}else {
 			console.log("This is the else statement");
 		}
 	}
+
+// When the forms submit button is clicked the function loginUser is run
+	document.getElementById("userInfoLogin").addEventListener("submit", loginUser, false);
 
 //Detta är en funktion som skickar iväg användardetaljer
 /*function createuser(e){
