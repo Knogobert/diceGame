@@ -21,33 +21,33 @@
 		</header>
 		<div id="popUpBG" class="popUpBG "><!--add "hide" as class to hide popup-->
 			<div class="popUp centerDiv">
-				<div class="closeButton" onclick="document.getElementById('popUpBG').classList.add('hide');"><p>X</p></div>
+				<div class="closeButton" onclick="document.getElementById('popUpBG').classList.add('hide');document.getElementById('popUpBG').classList.remove('show');"><p>X</p></div>
 				<form method="get" id="userInfoCreate" class="userInfoForm hide">
 					<h2>Create User</h2>
 					
 					<div class="requiredInput">
-						<label for="firstname">First name</label>
+						<label for="fName">First name</label>
 						<input type="text" name="firstname" class="floatRight" id="fName" pattern="[a-zA-Z]+" required value="Herr" autofocus />
 						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="lastname">Last name</label>
-						<input type="text" name="lastname" class="floatRight" id="lName" pattern="[a-zA-Z]+" required  value="Balle"/>
+						<label for="lName">Last name</label>
+						<input type="text" name="lastname" class="floatRight" id="lName" pattern="[a-zA-Z]+" required  value="Ballen"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="email">E-mail</label>
-						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required value="thereal@herrballe.com"/>
+						<label for="eMail">E-mail</label>
+						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required value="thereal@herrballen.com"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="pwd">Password</label>
+						<label for="pass">Password</label>
 						<input type="password" name="pwd" class="floatRight" id="pass" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters" value="herrballe"/>
 					</div>
 					<br/>
 					<div class="submitButtonWrap">
-						<input class="button submitButton" type="submit" onclick="createUser();" value="Create User" />
+						<input class="button submitButton" type="submit" value="Create User" />
 						<a href="#" class="centerTextLink" onclick="swap('userInfoLogin','userInfoCreate');" >Already a user?</a> 
 					</div>
 					
@@ -60,14 +60,14 @@
 					<h2>Log In</h2>
 					
 					<div class="requiredInput">
-						<label for="email">E-mail</label>
-						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required value="thereal@herrballe.com" autofocus />
+						<label for="eMailLogin">E-mail</label>
+						<input type="email" name="email" class="floatRight" id="eMailLogin" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required value="thereal@herrballe.com" autofocus />
 						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
 					</div>
 					<br/>
 					<div class="requiredInput">
-						<label for="pwd">Password</label>
-						<input type="password" name="pwd" class="floatRight" id="pass" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters" value="herrballe"/>
+						<label for="passLogin">Password</label>
+						<input type="password" name="pwd" class="floatRight" id="passLogin" maxlength="32" pattern=".{6,}" required placeholder="password, at least 6 characters" value="herrballe"/>
 					</div>
 					<br/>
 					<div class="submitButtonWrap">
@@ -89,8 +89,8 @@
 
 			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
 			
-			<div class="button" onclick=""><p>Create User</p></div>
-			<div class="button" onclick=""><p>Log In</p></div>
+			<div class="button" onclick="showUserInfo('Create','Login');"><p>Create User</p></div>
+			<div class="button" onclick="showUserInfo('Login','Create');"><p>Log In</p></div>
 
 			<form id="diceGame" method="get">
 

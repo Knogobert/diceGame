@@ -1,21 +1,21 @@
 //diceGame script
 
-function randomizer (bottom, top) {
-	return Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
+function randomizer(bottom, top) {
+	return Math.floor(Math.random() * (1 + top - bottom)) + bottom;
 }
 
 var roundScore = 0;
 var totalScore = 0;
 var chancesLeft = 10;
 
-function diceRoll (){
+function diceRoll(){
 	var guess = new Number(document.getElementById('guess').value);
 	if ( guess >= 3 && guess <= 18 ){
 		if (chancesLeft>0){
-			var d1 = randomizer (1, 6);
-			var d2 = randomizer (1, 6);
-			var d3 = randomizer (1, 6);
-			var d4 = randomizer (1, 6);
+			var d1 = randomizer(1, 6);
+			var d2 = randomizer(1, 6);
+			var d3 = randomizer(1, 6);
+			var d4 = randomizer(1, 6);
 			document.getElementById('d1').innerHTML = "<p>"+d1+"</p>";
 			document.getElementById('d2').innerHTML = d2;
 			document.getElementById('d3').innerHTML = d3;
@@ -103,13 +103,21 @@ function close (showOrHide){
 	}
 }
 
+// swaps between the Create User and Login 
 function swap(showObject, hideObject) {
     document.getElementById(showObject).classList.add('show');
     document.getElementById(showObject).classList.remove('hide');
     
     document.getElementById(hideObject).classList.add('hide');
     document.getElementById(hideObject).classList.remove('show');
-}//not working
+}
+
+// For the Create User or Login buttons on the main page
+function showUserInfo(showCreateOrLogin, hideCreateOrLogin){
+	document.getElementById('popUpBG').classList.add('show');
+	document.getElementById('userInfo'+showCreateOrLogin).classList.add('show');
+    document.getElementById('userInfo'+hideCreateOrLogin).classList.remove('hide');
+}
 
 //Checks the element if it has a certain class or not
 function hasClass(elem, klass) {
@@ -199,20 +207,19 @@ function regvalidate(firstform){
 
 // Create user
 var createClicks = 0;
-function createUser(){
-	//temporary
-	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
-	if (createClicks<1){
-		
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?callback=createUserId');
-		
+function createUser(e){
+	e.preventDefault();
+	console.log('Created user');
+	
+	if (createClicks<1){		
 		var firstname = document.getElementById("fName").value;
 		var lastname = document.getElementById("lName").value;
 		var email = document.getElementById("eMail").value;
 		var password =  document.getElementById("pass").value;
 		
-		var url='http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname;
-
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
+		//var url= 'http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
+		console.log('Created user2');
 		//ajaxRequest(url, createUserId);
 		
 		createClicks++;
@@ -220,39 +227,83 @@ function createUser(){
 		alert("STOP Clicken!")
 	}
 }
+	function createUserId(response){
+	
+		console.log(response);
+		console.log(response.message);
+		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
+		var ans=response.message;
+		if(ans=="user created"){
+			alert('User created');
+		}else if (ans=="failed to create user"){
+			alert('Failed to create user');
+			return false;
+		}
+		else{
+			alert('User already exists');
+			return false;
+		}
+	
+		if (response.status==400){
+			console.log("USER CREATED!");
+		}else if (response.status==200){
+			console.log("USER NOT CREATED!");
+		}else {
+			console.log("This is the else statement");
+		}
+		
+	}
+// När register form submitas startar functionen createuser
+	document.getElementById("userInfoCreate").addEventListener("submit", createUser, false);
+
 // Login user
 var loginClicks = 0;
 function loginUser(){
 	if (loginClicks<1){
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?callback=loginUserId');
+		var email = document.getElementById("eMailLogin").value;
+		var password =  document.getElementById("passLogin").value;
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
+		//var url='http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 		loginClicks++;
 	}else{
 		alert("STOP Clicken!")
 	}
 }
-function createUserId(response){
-
-	console.log(response);
+	function loginUserId(response){
 	
-	var ans=JSON.parse(response.responseText);
-	if(ans.message=="user created"){
-		alert('User created');
-	}
-	else{
-		alert('User already exists');
-	}
+		console.log(response);
+		
+		var ans=JSON.parse(response.responseText);
+		if(ans.message=="user created"){
+			alert('User logged in');
+		}
+		else{
+			alert('User already exists');
+		}
+		
+		//response.status
+		//return false;
 	
-	//response.status
-	//return false;
-
-	if (response.status==400){
-		console.log("USER CREATED!");
-	}else if (response.status==200){
-		console.log("USER NOT CREATED!");
-	}else {
-		console.log("This is the else statement");
+		if (response.status==400){
+			console.log("USER CREATED!");
+		}else if (response.status==200){
+			console.log("USER NOT CREATED!");
+		}else {
+			console.log("This is the else statement");
+		}
 	}
-}
+
+//Detta är en funktion som skickar iväg användardetaljer
+/*function createuser(e){
+	e.preventDefault();
+	var firstname = document.getElementById("firstname").value;
+	var surname = document.getElementById("surname").value;
+	var email = document.getElementById("email").value;
+	var password = document.getElementById("password").value;
+	
+	ajaxRequest ("http://edunet.cust.bluerange.se/dice/user/create.aspx?email="+email+"&pwd="+password+"&firstname="+firstname+"&lastname="+surname, createusercallback);
+}*/
+
 // Highscore List gets data from server and writes it out.
 var highscoreClicks = 0;
 var highscoreList=document.getElementById('highscoreList');
