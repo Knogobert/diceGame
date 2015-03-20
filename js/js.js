@@ -17,9 +17,9 @@ function diceRoll(){
 			var d3 = randomizer(1, 6);
 			var d4 = randomizer(1, 6);
 			document.getElementById('d1').innerHTML = "<p>"+d1+"</p>";
-			document.getElementById('d2').innerHTML = d2;
-			document.getElementById('d3').innerHTML = d3;
-			document.getElementById('d4').innerHTML = d4;
+			document.getElementById('d2').innerHTML = "<p>"+d2+"</p>";
+			document.getElementById('d3').innerHTML = "<p>"+d3+"</p>";
+			document.getElementById('d4').innerHTML = "<p>"+d4+"</p>";
 			
 			roundScore = 0;
 			var diceSum = (d1+d2+d3);
@@ -45,17 +45,18 @@ function diceRoll(){
 			scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess);
 			if(chancesLeft==0){
 				sendUserScore(sessionID,totalScore);
-				document.getElementById('tryAgain').style.backgroundColor="#FE5000";
-				document.getElementById('tryAgain').style.color="#FFF";
+				//document.getElementById('tryAgain').childNodes[0].style.color="#FE5000";
+				document.getElementById('tryAgain').classList.add('buttonOrange');
 			}
 		}else{
-			errorMessage ('You have no chances left, try again', 'show');
+			messageThis ('You have no chances left, try again', 'show', 'alert');
 		}
 	}else{
-		errorMessage ('Enter a number between 3 and 18', 'show');
+		messageThis ('Enter a number between 3 and 18', 'show', 'alert');
 	}
 }
 
+// Triggers when tryAgain button is clicked
 function resetScore(){
 	totalScore = 0;
 	roundScore = 0;
@@ -69,8 +70,8 @@ function resetScore(){
 	document.getElementById('totalScore').innerHTML = '0';
 	document.getElementById('chancesLeft').innerHTML = 10;
 	document.getElementById('scoreLog').innerHTML = '<h4>scoreLog</h4>';
-	document.getElementById('tryAgain').style.backgroundColor="#EEE";
-	document.getElementById('tryAgain').style.color="#000";
+	//document.getElementById('tryAgain').childNodes[0].style.color="#a8a8a8";
+	document.getElementById('tryAgain').classList.remove('buttonOrange');
 }
 
 // Images instead
@@ -86,26 +87,26 @@ function scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess){
 	document.getElementById('scoreLog').appendChild(resultThisRound);
 }
 
-// Error messaging, runs for 5 seconds
-function errorMessage (error, showOrHide){
+// Messaging, alert or message, runs for 5 seconds
+function messageThis (msg, showOrHide, alertOrMessage){
 	document.getElementById('notification').classList.remove('hide');
 	document.getElementById('notification').classList.remove('show');
 	document.getElementById('notification').classList.add(showOrHide);
-	document.getElementById('hidden-notification').classList.remove('hide');
-	document.getElementById('hidden-notification').classList.remove('show');
-	document.getElementById('hidden-notification').classList.add(showOrHide);
-	document.getElementById('errorDisplay').innerHTML = error;
+	document.getElementById('notification').classList.remove('alert');
+	document.getElementById('notification').classList.remove('message');
+	document.getElementById('notification').classList.add(alertOrMessage);
+	document.getElementById('messageDisplay').innerHTML = msg;
 	
 	setTimeout(function(){
 		document.getElementById('notification').classList.add('hide');
 		document.getElementById('notification').classList.remove('show');
-		document.getElementById('hidden-notification').classList.add('hide');
-		document.getElementById('hidden-notification').classList.remove('show');
-		document.getElementById('errorDisplay').innerHTML = '';
+		document.getElementById('notification').classList.remove('alert');
+		document.getElementById('notification').classList.remove('message');
+		document.getElementById('messageDisplay').innerHTML = '';
 	},5000);
 	
-	if(error.length>0){
-		console.log('Error: '+error);
+	if(msg.length>0){
+		console.log('Message: '+msg);
 	}
 }
 
@@ -146,7 +147,7 @@ function hasClass(elem, klass) {
 
 function submitUserInfo(){
 	if (hasClass(document.body.parentNode, "no-formvalidation")) {
-		errorMessage ('You are not using a HTML5 form-validator', 'show');
+		messageThis ('You are not using a HTML5 form-validator', 'show', 'alert');
 		H5F.setup(document.getElementsByTagName('form'), {
 			onSubmit:document.getElementById('popUpBG').classList.add('hide')
 			//onInvalid: function (invalidInputElement) {}
@@ -154,12 +155,7 @@ function submitUserInfo(){
 	}
 }
 
-/*
-//Checks for the class "no-formvalidation"
-if (hasClass(document.body.parentNode, "no-formvalidation")) {
-    errorMessage ('You are not using a HTML5 form-validator', 'show');
-    H5F.setup(document.getElementsByTagName('form'));
-}*/
+var edunetUrl='http://edunet.cust.bluerange.se/dice/';
 
 // AJAX request, works only on same server
 function ajaxRequest(url, callback) {
@@ -245,10 +241,11 @@ function userName(){
 	//sessionID = localStorage.logSessionID;
 	firstName = localStorage.firstName;
 	lastName = localStorage.lastName;
-	var userNameTag = document.createElement('h2');
-	userNameTag.innerHTML = 'hello '+firstName+' '+lastName+'!';
-	document.getElementById('personalWelcome').appendChild(userNameTag);
-	
+	if(document.getElementById('personalWelcome').innerHTML==''){
+		var userNameTag = document.createElement('h2');
+		userNameTag.innerHTML = 'hello '+firstName+' '+lastName+'!';
+		document.getElementById('personalWelcome').appendChild(userNameTag);
+	}
 	document.getElementById('createUserButton').classList.remove('buttonOrange');
     document.getElementById('loginUserButton').classList.remove('buttonOrange');
 }
@@ -261,9 +258,8 @@ function createUser(e){
 	var email = document.getElementById("eMail").value;
 	var password =  document.getElementById("pass").value;
 	
-	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
-	//var url= 'http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
-	console.log('Created user2');
+	JSONPRequest(edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
+	//var url= edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
 	//ajaxRequest(url, createUserId);
 }
 	function createUserId(response){
@@ -272,7 +268,7 @@ function createUser(e){
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
 	
 		if (response.status==400){
-			errorMessage ("Created a user!", 'show');
+			messageThis ("Created a user!", 'show', 'message');
 			localStorage.logSessionID = response.session; // Sets the session to localStorage.logSessionID etc.
 			localStorage.firstName = response.user.firstName;
 			localStorage.lastName = response.user.lastName;
@@ -281,9 +277,9 @@ function createUser(e){
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
 		}else if (response.status==200){
-			errorMessage ("Couldn't successfully create a user but reached the server", 'show');
+			messageThis ("Couldn't successfully create a user but reached the server", 'show', 'alert');
 		}else {
-			errorMessage ("Couldn't successfully create a user", 'show');
+			messageThis ("Couldn't successfully create a user", 'show', 'alert');
 		}
 		
 	}
@@ -295,8 +291,8 @@ function loginUser(e){
 	e.preventDefault();
 	var email = document.getElementById("eMailLogin").value;
 	var password =  document.getElementById("passLogin").value;
-	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
-	//var url='http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
+	JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
+	//var url=edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 }
 	function loginUserId(response){
 		console.log(response);
@@ -304,7 +300,7 @@ function loginUser(e){
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
 	
 		if (response.status==400){
-			console.log("Successfully logged in user");
+			messageThis ("Logged in!", 'show', 'message');
 			localStorage.logSessionID = response.session;
 			localStorage.firstName = response.user.firstName;
 			localStorage.lastName = response.user.lastName;
@@ -313,9 +309,9 @@ function loginUser(e){
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
 		}else if (response.status==200){
-			errorMessage ("Couldn't successfully log in but reached the server", 'show');
+			messageThis ("Couldn't successfully log in but reached the server", 'show', 'alert');
 		}else {
-			errorMessage ("Couldn't successfully log in", 'show');
+			messageThis ("Couldn't successfully log in", 'show', 'alert');
 		}
 	}
 
@@ -325,16 +321,16 @@ document.getElementById("userInfoLogin").addEventListener("submit", loginUser, f
 // Adds users highscore to the leaderboards
 function sendUserScore(sessionID,totalScore){
 	if(sessionID!=undefined){
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/add.aspx?score='+totalScore+'&session='+sessionID+'&callback=addUserScore');// Change totalScore to a high number to "hack" the leaderboards
+		JSONPRequest(edunetUrl+'score/add.aspx?score='+totalScore+'&session='+sessionID+'&callback=addUserScore');// Change totalScore to a high number to "hack" the leaderboards
 	}else{
-		errorMessage ('Could not add your Highscore to the leaderboards, you are not signed in', 'show');
+		messageThis ('Could not add your Highscore to the leaderboards, you are not signed in', 'show', 'alert');
 	}
 }
 	function addUserScore(data){
 		if(data.message=="score saved"){
-			errorMessage ('Your Highscore was added to the leaderboards', 'show');
+			messageThis ('Your Highscore was added to the leaderboards', 'show', 'message');
 		}else{
-			errorMessage ('Could not add your Highscore to the leaderboards', 'show');
+			messageThis ('Could not add your Highscore to the leaderboards', 'show', 'alert');
 		}
 	}
 
@@ -344,13 +340,13 @@ var userScoreList=document.getElementById('userScoreList');
 function getUserScore(sessionID){
 	if(sessionID!=undefined&&userScoreClicks<1){
 		userScoreList.innerHTML = "";
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/user.aspx?session='+sessionID+'&callback=writeUserScore');
+		JSONPRequest(edunetUrl+'score/user.aspx?session='+sessionID+'&callback=writeUserScore');
 		userScoreClicks++;
 		setTimeout(function(){userScoreClicks=0},2000);
 	}else if(userScoreClicks!=0){
-		errorMessage ('Stop spamming dude!', 'show');
+		messageThis ('Stop spamming dude!', 'show', 'alert');
 	}else{
-		errorMessage ('Could not get your highscore on the leaderboards, you are not signed in', 'show');
+		messageThis ('Could not get your highscore on the leaderboards, you are not signed in', 'show', 'alert');
 	}
 }
 	function writeUserScore(data){
@@ -369,7 +365,7 @@ function getUserScore(sessionID){
 				userScoreList.appendChild(timestamp);
 			}
 		}else{
-			errorMessage ('Could not get your highscore on the leaderboards, you are not signed in', 'show');
+			messageThis ('Could not get your highscore on the leaderboards, try signing in again', 'show', 'alert');
 		}
 	}
 function removeUserScoreList(){
@@ -383,13 +379,13 @@ var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){
 	if (highscoreClicks<1){
 		highscoreList.innerHTML="";
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=writeHighscore');
+		JSONPRequest(edunetUrl+'score/top.aspx?callback=writeHighscore');
 		highscoreClicks++;
 		setTimeout(function(){highscoreClicks=0},2000);
 	}else if(highscoreClicks!=0){
-		errorMessage ('Stop spamming dude!', 'show');
+		messageThis ('Stop spamming dude!', 'show', 'alert');
 	}else{
-		errorMessage ('Could not get the highscores on the leaderboards', 'show');
+		messageThis ('Could not get the highscores on the leaderboards', 'show', 'alert');
 	}
 }
 	function writeHighscore(data){
@@ -416,3 +412,5 @@ function removeHighscoreList(){
 	highscoreList.innerHTML = "";
 	highscoreClicks=0;
 }
+
+console.log("%cDG14 is the shizzle", "color: #FE5000; background:#333; font-size: x-large");

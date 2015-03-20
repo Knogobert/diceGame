@@ -15,8 +15,8 @@
 		<header>
 			<h1>diceGame</h1>
 			<div id="notification" class="hide">
-				<h2 id="errorDisplay"></h2>
-				<div class="closeButton"><p class="close" onclick="errorMessage('','hide');">X</p></div>
+				<h2 id="messageDisplay"></h2>
+				<div class="closeButton"><p class="close" onclick="messageThis('','hide');">X</p></div>
 			</div>
 		</header>
 		<div id="popUpBG" class="popUpBG hide"><!--add "hide" as class to hide popup-->
@@ -126,7 +126,7 @@
 				
 				<div class="button" onclick="diceRoll();"><p>guess</p></div>
 				
-				<div class="button" id="tryAgain" onclick="resetScore(); errorMessage('','hide');"><p>tryAgain</p></div>
+				<div class="button" id="tryAgain" onclick="resetScore(); messageThis('','hide');"><p>tryAgain</p></div>
 				
 			</form>
 

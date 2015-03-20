@@ -13,6 +13,18 @@
 /* 	Orange
 	#FE5000
 */
+/*	Grey 1
+	#333
+*/
+/*	Grey 2
+	#404040
+*/
+/*	Grey 3
+	#616161
+*/
+/*	Grey 4
+	#a8a8a8
+*/
 /*----- Main Formatting -----*/
 
 * {
@@ -26,7 +38,7 @@ body {
 	margin: 0 auto;
 	top: 0;
 	left: 0;
-	background-color: #EEE;
+	background-color: #333;
 	min-width: 320px;
 }
 
@@ -34,7 +46,7 @@ header {
 	width: 100%;
 	height: 50px;
 	margin-bottom: 50px;
-	background-color: #AAA;
+	background-color: #404040;
 }
 
 main {
@@ -56,6 +68,7 @@ footer {
 
 h1, h2, h3, h4, h5, h6{
 	font-family: 'Maven Pro', sans-serif;
+	color: white;
 }
 
 h2 {
@@ -65,7 +78,7 @@ h2 {
 h3 {
 	text-align: center;
 	font-size: 12pt;
-	color: #999;
+	color: #a8a8a8;
 }
 
 h4 {
@@ -85,10 +98,18 @@ h6 {
 
 p, a, label, button {
 	font-family: 'Lato', sans-serif;
+	color: #a8a8a8;
 }
 
-p {
-	
+input {
+	background-color: #303030;
+	border: #303030 solid 1px;
+	border-radius: 10px;
+	color: #a8a8a8;
+	padding: 0 5px;
+}input:focus {
+	border-bottom: solid 2px #FE5000;
+	outline: none;
 }
 
 a, a:visited, a:active {
@@ -154,26 +175,28 @@ header h1 {
 	display: block !important;
 }
 
-.button > p {margin: 0;}
+.button > p {margin: 0; color: #a8a8a8}
 
 .button{
-	border:solid 1px;
+	/*border:#a8a8a8 solid 1px;*/
 	border-radius: 20px;
 	padding:10px;
 	cursor: pointer;
 	display: inline-block;
 	box-sizing: border-box;
-	background-color: #EEE;
+	background-color: #303030;
 }
 
 .button:hover{
-	background-color: #000;
+	background-color: #222;
 	color:#fff;
 }
 
 .buttonOrange {
-	background-color: #FE5000;
-	color: #FFF;
+	border-bottom: solid 2px #FE5000;
+}
+.buttonOrange > p {
+	color: #FE5000;
 }
 
 .closeButton {
@@ -204,11 +227,12 @@ div.die {
 	padding: 5px;
 	height: 20px;
 	width: 20px;
-	border: 1px solid black;
+	/*border: 1px solid #333;*/
 	border-radius: 5px;
 	text-align: center;
 	display: inline-block;
-	
+	color: #a8a8a8;
+	background-color: #303030;
 	font-family: 'Lato', sans-serif;
 } div.die > p {
 	margin: 0;	
@@ -248,6 +272,11 @@ div.die {
 
 .userInfoForm input[type="email"], .userInfoForm input[type="text"], .userInfoForm input[type="password"] {
 	min-width: 65%;
+	border: none;
+	border-bottom: solid 2px #c9c9c9;
+}.userInfoForm input[type="email"]:focus, .userInfoForm input[type="text"]:focus, .userInfoForm input[type="password"]:focus {
+	border-bottom: solid 2px #FE5000;
+	outline: none;
 }
 
 .userInfoForm .submitButtonWrap {
@@ -259,11 +288,18 @@ div.die {
 .userInfoForm .submitButton {
 	display: block;
 	margin: 0 auto;
+	color: #a8a8a8;
+}
+
+.userInfoForm h2 {
+	color: #333;
 }
 
 .userInfoForm a {
 	clear: both;
-	margin: 0 auto;
+	width: inherit;
+	display: inline-block;
+	margin-top: 5px;
 }
 
 form label:after { /* Adds colon to all labels within a form */
@@ -317,17 +353,24 @@ form label:after { /* Adds colon to all labels within a form */
 /*----- errorDisplay Formatting -----*/
 
 #notification {
-    position: relative;
+    position: absolute;
     z-index: 101;
-    top: 0;
+    top: 50px;
     left: 0;
     right: 0;
-    background: #FE5000;
     text-align: center;
     overflow: hidden;
 	/*-webkit-box-shadow: 0 0 5px black;
     -moz-box-shadow:    0 0 5px black;
     box-shadow:         0 0 5px black;*/
+}
+
+.alert {
+	background: #FE5000;
+}
+
+.message {
+	background: #44D62C;
 }
 
 #hidden-notification {
@@ -336,7 +379,7 @@ form label:after { /* Adds colon to all labels within a form */
 	width: 100%;
 }
 
-#errorDisplay {
+#messageDisplay {
 	color: #FFF;
 }
 
