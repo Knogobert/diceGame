@@ -9,9 +9,9 @@ var totalScore = 0;
 var chancesLeft = 10;
 
 function diceRoll(){
-	var guess = new Number(document.getElementById('guess').value);
-	if ( guess >= 3 && guess <= 18 ){
-		if (chancesLeft>0){
+	var guess = document.getElementById('guess').value;
+	if(guess >= 3 && guess <= 18 ){
+		if(chancesLeft>0){
 			var d1 = randomizer(1, 6);
 			var d2 = randomizer(1, 6);
 			var d3 = randomizer(1, 6);
@@ -21,12 +21,13 @@ function diceRoll(){
 			document.getElementById('d3').innerHTML = d3;
 			document.getElementById('d4').innerHTML = d4;
 			
+			roundScore = 0;
 			var diceSum = (d1+d2+d3);
 			console.log("diceGame: The 3 dice sum is: "+diceSum);
 			console.log("diceGame: The 4th die shows: "+d4);
 			document.getElementById('diceSum').innerHTML = diceSum;
-					
-			if (guess==diceSum){
+			
+			if(guess==diceSum){
 				roundScore = diceSum*d4;
 				totalScore += roundScore;
 				document.getElementById('roundScore').innerHTML = roundScore;
@@ -41,8 +42,14 @@ function diceRoll(){
 			chancesLeft--;
 			document.getElementById('chancesLeft').innerHTML = chancesLeft;
 			console.log("diceGame: You have "+chancesLeft+" chances left");
+			scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess);
+			if(chancesLeft==0){
+				sendUserScore(sessionID,totalScore);
+				document.getElementById('tryAgain').style.backgroundColor="#FE5000";
+				document.getElementById('tryAgain').style.color="#FFF";
+			}
 		}else{
-			errorMessage ('Try again', 'show');
+			errorMessage ('You have no chances left, try again', 'show');
 		}
 	}else{
 		errorMessage ('Enter a number between 3 and 18', 'show');
@@ -61,9 +68,23 @@ function resetScore(){
 	document.getElementById('roundScore').innerHTML = '0';
 	document.getElementById('totalScore').innerHTML = '0';
 	document.getElementById('chancesLeft').innerHTML = 10;
+	document.getElementById('scoreLog').innerHTML = '<h4>scoreLog</h4>';
 }
 
-// Error messaging
+// Images instead
+// document.getElementsByTagName('img')[i].setAttribute('src', 'img/'+i+'.jpg');
+
+// Score logging, creates an entry every time diceRoll() is run
+function scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess){
+	var resultThisRound = document.createElement('p');
+	if(guess==diceSum){
+		resultThisRound.setAttribute('style', 'color: #FE5000;');
+	}
+	resultThisRound.innerHTML = '<span>'+(chancesLeft+1)+'</span> You rolled: <span class="fat">'+diceSum+' x '+d4+'</span>, your score this round was: <span>'+roundScore+'</span> and your total score is: <span>'+totalScore+'</span>';
+	document.getElementById('scoreLog').appendChild(resultThisRound);
+}
+
+// Error messaging, runs for 5 seconds
 function errorMessage (error, showOrHide){
 	document.getElementById('notification').classList.remove('hide');
 	document.getElementById('notification').classList.remove('show');
@@ -72,9 +93,16 @@ function errorMessage (error, showOrHide){
 	document.getElementById('hidden-notification').classList.remove('show');
 	document.getElementById('hidden-notification').classList.add(showOrHide);
 	document.getElementById('errorDisplay').innerHTML = error;
-	if(error==''){
-		console.log(error);
-	}else{
+	
+	setTimeout(function(){
+		document.getElementById('notification').classList.add('hide');
+		document.getElementById('notification').classList.remove('show');
+		document.getElementById('hidden-notification').classList.add('hide');
+		document.getElementById('hidden-notification').classList.remove('show');
+		document.getElementById('errorDisplay').innerHTML = '';
+	},5000);
+	
+	if(error.length>0){
 		console.log('Error: '+error);
 	}
 }
@@ -87,26 +115,6 @@ function reportErrors(errors){
 		console.log(msg);
 	}
 	alert(msg);
-}
-
-// General visibility classes, WIP
-function scruub(that, showOrHide){
-	console.log('AOISHFLKASFNAL');
-	var divName = that.parentNode.parentNode;
-	var divParent = that.parentNode;
-	if(showOrHide=='hide'){
-		divName.classList.remove('show');
-		divName.classList.add('hide');
-		divParent.classList.remove('show');
-		divParent.classList.add('hide');
-		console.log("Hiding element");
-	}else{
-		divName.classList.remove('hide');
-		divName.classList.add('show');
-		divParent.classList.remove('hide');
-		divParent.classList.add('show');
-		console.log("Showing element");
-	}
 }
 
 // swaps between the Create User and Login 
@@ -215,150 +223,190 @@ function regvalidate(firstform){
 }
 //document.getElementById("userInfoCreate").addEventListener("submit", validate);
 
+// ---------------- Checks if client has a sessionID and decides to show the user form or not. If there is a sessionID, the name is written out too. -----------------------
+// Sets the sessionID to the variable session
+var sessionID = localStorage.logSessionID;
+var firstName = localStorage.firstName;
+var lastName = localStorage.lastName;
+
+if(sessionID==undefined){
+	document.getElementById('popUpBG').classList.add('show');
+	document.getElementById('userInfoLogin').classList.add('show');
+    document.getElementById('userInfoLogin').classList.remove('hide');
+    
+    document.getElementById('createUserButton').classList.add('buttonOrange');
+    document.getElementById('loginUserButton').classList.add('buttonOrange');
+}else{userName();}
+
+// Writes out user name
+function userName(){
+	//sessionID = localStorage.logSessionID;
+	firstName = localStorage.firstName;
+	lastName = localStorage.lastName;
+	var userNameTag = document.createElement('h2');
+	userNameTag.innerHTML = 'hello '+firstName+' '+lastName+'!';
+	document.getElementById('personalWelcome').appendChild(userNameTag);
+	
+	document.getElementById('createUserButton').classList.remove('buttonOrange');
+    document.getElementById('loginUserButton').classList.remove('buttonOrange');
+}
+
 // Create user
-var createClicks = 0;
 function createUser(e){
 	e.preventDefault();
-	console.log('Created user');
+	var firstname = document.getElementById("fName").value;
+	var lastname = document.getElementById("lName").value;
+	var email = document.getElementById("eMail").value;
+	var password =  document.getElementById("pass").value;
 	
-	if (createClicks<1){		
-		var firstname = document.getElementById("fName").value;
-		var lastname = document.getElementById("lName").value;
-		var email = document.getElementById("eMail").value;
-		var password =  document.getElementById("pass").value;
-		
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
-		//var url= 'http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
-		console.log('Created user2');
-		//ajaxRequest(url, createUserId);
-		
-		createClicks++;
-	}else{
-		alert("STOP Clicken!")
-	}
+	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
+	//var url= 'http://edunet.cust.bluerange.se/dice/user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
+	console.log('Created user2');
+	//ajaxRequest(url, createUserId);
 }
 	function createUserId(response){
-	
 		console.log(response);
 		console.log(response.message);
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
-		var ans=response.message;
-		/*if(ans=="user created"){
-			alert('User created');
-		}else if (ans=="failed to create user"){
-			alert('Failed to create user');
-			return false;
-		}
-		else{
-			alert('User already exists');
-			return false;
-		}*/
 	
 		if (response.status==400){
-			console.log("USER CREATED!");
+			errorMessage ("Created a user!", 'show');
+			localStorage.logSessionID = response.session; // Sets the session to localStorage.logSessionID etc.
+			localStorage.firstName = response.user.firstName;
+			localStorage.lastName = response.user.lastName;
+			sessionID = localStorage.logSessionID;
+			document.getElementById('popUpBG').classList.add('hide');
+			document.getElementById('popUpBG').classList.remove('show');
+			userName();// Writes out name
 		}else if (response.status==200){
-			console.log("USER NOT CREATED!");
+			errorMessage ("Couldn't successfully create a user but reached the server", 'show');
 		}else {
-			console.log("This is the else statement");
+			errorMessage ("Couldn't successfully create a user", 'show');
 		}
 		
 	}
 // When the forms submit button is clicked the function createUser is run
-	document.getElementById("userInfoCreate").addEventListener("submit", createUser, false);
+document.getElementById("userInfoCreate").addEventListener("submit", createUser, false);
 
 // Login user
-var loginClicks = 0;
 function loginUser(e){
 	e.preventDefault();
-	if (loginClicks<1){
-		var email = document.getElementById("eMailLogin").value;
-		var password =  document.getElementById("passLogin").value;
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
-		//var url='http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
-		loginClicks++;
-	}else{
-		alert("STOP Clicken!")
-	}
+	var email = document.getElementById("eMailLogin").value;
+	var password =  document.getElementById("passLogin").value;
+	JSONPRequest('http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
+	//var url='http://edunet.cust.bluerange.se/dice/user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 }
 	function loginUserId(response){
-	
 		console.log(response);
 		console.log(response.message);
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
-		var ans=response.message;
-		/*if(ans.message=="user created"){
-			alert('User logged in');
-		}
-		else{
-			alert('User already exists');
-		}
-		*/
-		//response.status
-		//return false;
 	
 		if (response.status==400){
 			console.log("Successfully logged in user");
+			localStorage.logSessionID = response.session;
+			localStorage.firstName = response.user.firstName;
+			localStorage.lastName = response.user.lastName;
+			sessionID = localStorage.logSessionID;
+			document.getElementById('popUpBG').classList.add('hide');
+			document.getElementById('popUpBG').classList.remove('show');
+			userName();// Writes out name
 		}else if (response.status==200){
-			console.log("Couldn't successfully log in user");
+			errorMessage ("Couldn't successfully log in but reached the server", 'show');
 		}else {
-			console.log("This is the else statement");
+			errorMessage ("Couldn't successfully log in", 'show');
 		}
 	}
 
 // When the forms submit button is clicked the function loginUser is run
-	document.getElementById("userInfoLogin").addEventListener("submit", loginUser, false);
+document.getElementById("userInfoLogin").addEventListener("submit", loginUser, false);
 
-//Detta är en funktion som skickar iväg användardetaljer
-/*function createuser(e){
-	e.preventDefault();
-	var firstname = document.getElementById("firstname").value;
-	var surname = document.getElementById("surname").value;
-	var email = document.getElementById("email").value;
-	var password = document.getElementById("password").value;
-	
-	ajaxRequest ("http://edunet.cust.bluerange.se/dice/user/create.aspx?email="+email+"&pwd="+password+"&firstname="+firstname+"&lastname="+surname, createusercallback);
-}*/
+// Adds users highscore to the leaderboards
+function sendUserScore(sessionID,totalScore){
+	if(sessionID!=undefined){
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/add.aspx?score='+totalScore+'&session='+sessionID+'&callback=addUserScore');// Change totalScore to a high number to "hack" the leaderboards
+	}else{
+		errorMessage ('Could not add your Highscore to the leaderboards, you are not signed in', 'show');
+	}
+}
+	function addUserScore(data){
+		if(data.message=="score saved"){
+			errorMessage ('Your Highscore was added to the leaderboards', 'show');
+		}else{
+			errorMessage ('Could not add your Highscore to the leaderboards', 'show');
+		}
+	}
+
+// UserScoreList gets data from server and writes it out.
+var userScoreClicks=0;
+var userScoreList=document.getElementById('userScoreList');
+function getUserScore(sessionID){
+	if(sessionID!=undefined&&userScoreClicks<1){
+		userScoreList.innerHTML = "";
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/user.aspx?session='+sessionID+'&callback=writeUserScore');
+		userScoreClicks++;
+		setTimeout(function(){userScoreClicks=0},2000);
+	}else if(userScoreClicks!=0){
+		errorMessage ('Stop spamming dude!', 'show');
+	}else{
+		errorMessage ('Could not get your highscore on the leaderboards, you are not signed in', 'show');
+	}
+}
+	function writeUserScore(data){
+		for (var i=0;i<data.scores.length||i<data.scores[10];i++){
+			
+			var points=document.createElement('h6');
+			points.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+			points.className="floatLeft";
+			
+			var timestamp=document.createElement('h6');
+			timestamp.innerHTML=data.scores[i].timestamp;
+			timestamp.className="floatRight";
+			
+			userScoreList.appendChild(points);
+			userScoreList.appendChild(timestamp);
+			}
+	}
+function removeUserScoreList(){
+	userScoreList.innerHTML = "";
+	userScoreClicks=0;
+}
 
 // Highscore List gets data from server and writes it out.
 var highscoreClicks = 0;
 var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){
 	if (highscoreClicks<1){
-		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=highscore');
+		highscoreList.innerHTML="";
+		JSONPRequest('http://edunet.cust.bluerange.se/dice/score/top.aspx?callback=writeHighscore');
 		highscoreClicks++;
+		setTimeout(function(){highscoreClicks=0},2000);
+	}else if(highscoreClicks!=0){
+		errorMessage ('Stop spamming dude!', 'show');
 	}else{
-		alert("STOP Clicken!")
+		errorMessage ('Could not get the highscores on the leaderboards', 'show');
 	}
 }
+	function writeHighscore(data){
+		console.log(data);
+		for (var i=0;i<data.scores.length;i++){
+			var name= document.createElement('h5');
+			name.innerHTML=data.scores[i].name;
+			name.className="floatLeft";
+			
+			var points=document.createElement('h6');
+			points.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+			points.className="floatLeft";
+			
+			var timestamp=document.createElement('h6');
+			timestamp.innerHTML=data.scores[i].timestamp;
+			timestamp.className="floatRight";
+			
+			highscoreList.appendChild(name);
+			highscoreList.appendChild(points);
+			highscoreList.appendChild(timestamp);
+			}
+	}
 function removeHighscoreList(){
-	if (highscoreClicks!=0){
-		highscoreList.innerHTML = "";
-		highscoreClicks=0;
-	}else{
-		alert("STOP Clicken!")
-	}
+	highscoreList.innerHTML = "";
+	highscoreClicks=0;
 }
-function highscore(data){
-	console.log(data);
-	for (var i=0;i<data.scores.length;i++){
-		var name= document.createElement('h5');
-		name.innerHTML=data.scores[i].name;
-		name.className="floatLeft";
-		
-		var point=document.createElement('h6');
-		point.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-		point.className="floatLeft";
-		
-		var timestamp=document.createElement('h6');
-		timestamp.innerHTML=data.scores[i].timestamp;
-		timestamp.className="floatRight";
-		
-		highscoreList.appendChild(name);
-		highscoreList.appendChild(point);
-		highscoreList.appendChild(timestamp);
-		}
-}
-
-
-
-

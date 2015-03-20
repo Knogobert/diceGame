@@ -7,6 +7,12 @@
 
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700|Maven+Pro:400,700);
 
+/* 	Green
+	#44D62C
+*/
+/* 	Orange
+	#FE5000
+*/
 /*----- Main Formatting -----*/
 
 * {
@@ -148,19 +154,26 @@ header h1 {
 	display: block !important;
 }
 
+.button > p {margin: 0;}
+
 .button{
 	border:solid 1px;
-	border-radius: 15px;
+	border-radius: 20px;
 	padding:10px;
 	cursor: pointer;
-	text-transform: uppercase;
 	display: inline-block;
 	box-sizing: border-box;
+	background-color: #EEE;
 }
 
 .button:hover{
 	background-color: #000;
 	color:#fff;
+}
+
+.buttonOrange {
+	background-color: #FE5000;
+	color: #FFF;
 }
 
 .closeButton {
@@ -200,6 +213,24 @@ div.die {
 } div.die > p {
 	margin: 0;	
 }
+
+/*----- scoreLog Formatting -----*/
+
+#scoreLog {
+	
+}
+
+#scoreLog > p {
+	margin: 0;
+}
+
+#scoreLog > p > span {
+	display: inline-block;
+	text-align: right;
+	width: 20px;
+}
+
+#scoreLog > p > span.fat {width: 45px;}
 
 /*----- popUp Formatting -----*/
 
@@ -279,7 +310,7 @@ form label:after { /* Adds colon to all labels within a form */
 /*----- highScore Formatting -----*/
 
 .highScoreWrap {
-	width: 300px;
+	width: 250px;
 	overflow: hidden;
 }
 
