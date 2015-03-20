@@ -69,6 +69,8 @@ function resetScore(){
 	document.getElementById('totalScore').innerHTML = '0';
 	document.getElementById('chancesLeft').innerHTML = 10;
 	document.getElementById('scoreLog').innerHTML = '<h4>scoreLog</h4>';
+	document.getElementById('tryAgain').style.backgroundColor="#EEE";
+	document.getElementById('tryAgain').style.color="#000";
 }
 
 // Images instead
@@ -352,19 +354,23 @@ function getUserScore(sessionID){
 	}
 }
 	function writeUserScore(data){
-		for (var i=0;i<data.scores.length||i<data.scores[10];i++){
-			
-			var points=document.createElement('h6');
-			points.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-			points.className="floatLeft";
-			
-			var timestamp=document.createElement('h6');
-			timestamp.innerHTML=data.scores[i].timestamp;
-			timestamp.className="floatRight";
-			
-			userScoreList.appendChild(points);
-			userScoreList.appendChild(timestamp);
+		if(data.message!="unable to find highscore"){
+			for (var i=0;i<data.scores.length||i<data.scores[10];i++){
+				
+				var points=document.createElement('h6');
+				points.innerHTML=data.scores[i].points.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+				points.className="floatLeft";
+				
+				var timestamp=document.createElement('h6');
+				timestamp.innerHTML=data.scores[i].timestamp;
+				timestamp.className="floatRight";
+				
+				userScoreList.appendChild(points);
+				userScoreList.appendChild(timestamp);
 			}
+		}else{
+			errorMessage ('Could not get your highscore on the leaderboards, you are not signed in', 'show');
+		}
 	}
 function removeUserScoreList(){
 	userScoreList.innerHTML = "";
