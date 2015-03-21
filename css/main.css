@@ -253,7 +253,6 @@ div.die {
 	padding: 5px;
 	height: 40px;
 	width: 40px;
-	/*border: 1px solid #333;*/
 	border-radius: 5px;
 	text-align: center;
 	display: inline-block;
@@ -451,9 +450,6 @@ form label:after { /* Adds colon to all labels within a form */
     right: 0;
     text-align: center;
     overflow: hidden;
-	/*-webkit-box-shadow: 0 0 5px black;
-    -moz-box-shadow:    0 0 5px black;
-    box-shadow:         0 0 5px black;*/
 }
 
 .alert {
@@ -464,11 +460,11 @@ form label:after { /* Adds colon to all labels within a form */
 	background: #44D62C;
 }
 
-#hidden-notification {
+/*#hidden-notification {
 	top:0;
 	height: 50px;
 	width: 100%;
-}
+}*/
 
 #messageDisplay {
 	color: #FFF;
