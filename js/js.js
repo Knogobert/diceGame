@@ -160,17 +160,9 @@ function showUserInfo(showCreateOrLogin, hideCreateOrLogin){
 //Checks the element if it has a certain class or not
 function hasClass(elem, klass) {
     return (" " + elem.className + " ").indexOf(" " + klass + " ") > -1;
-}
-
-function submitUserInfo(){
-	if (hasClass(document.body.parentNode, "no-formvalidation")) {
-		messageThis ('You are not using a HTML5 form-validator', 'show', 'alert');
-		H5F.setup(document.getElementsByTagName('form'), {
-			onSubmit:document.getElementById('popUpBG').classList.add('hide')
-			//onInvalid: function (invalidInputElement) {}
-		});
+}if (hasClass(document.body.parentNode, "no-formvalidation")) {
+		messageThis ('You are not using a HTML5 form-validator, dude... change to chrome', 'show', 'alert');
 	}
-}
 
 var edunetUrl='http://edunet.cust.bluerange.se/dice/';
 
@@ -207,14 +199,14 @@ var checkName = /^[A-ZÅÄÖa-zåäö]{2,20}$/;
 var checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i ;
 var checkPassword =  /^[A-ZÅÄÖa-zåäö0-9!@#$%^&*()_]{6,32}$/;
 
-function regvalidate(firstform){
-	firstform.preventDefault();
-	var firstname = document.getElementById("firstname").value;
-	var lastname = document.getElementById("lastname").value;
-	var email = document.getElementById("email").value;
-	var password =  document.getElementById("password").value;
+function regValidateCreate(e){
+	e.preventDefault();
+	var firstname = document.getElementById("fName").value;
+	var lastname = document.getElementById("lName").value;
+	var email = document.getElementById("eMail").value;
+	var password =  document.getElementById("pass").value;
 	
-	console.log(password);
+	console.log('Your password is: '+password);
 	var errors = [];
 
 	if (!checkName.test(firstname)) {
@@ -229,14 +221,41 @@ function regvalidate(firstform){
 	if (!checkPassword.test(password)) {
 		errors[errors.length] = "You didn't enter a correct password, at least 6 characters!";
 	}
-
+	
 	if (errors.length > 0) {
+		messageThis (errors, 'show', 'alert')
 		return false;
-	}
-	console.log('VALIDATION WORKS');
+	}else{
+		console.log('User creation was validated');
+		createUser();
 		return true;
+	}
 }
-//document.getElementById("userInfoCreate").addEventListener("submit", validate);
+function regValidateLogin(e){
+	e.preventDefault();
+	var emailLogin = document.getElementById("eMailLogin").value;
+	var passwordLogin =  document.getElementById("passLogin").value;
+	
+	console.log('Your password is: '+passwordLogin);
+	var errors = [];
+
+	if (!checkEmail.test(emailLogin)) {
+		errors[errors.length] = "You didn't enter a correct e-mail";
+	}
+	if (!checkPassword.test(passwordLogin)) {
+		errors[errors.length] = "You didn't enter a correct password, at least 6 characters!";
+	}
+	
+	if (errors.length > 0) {
+		messageThis (errors, 'show', 'alert')
+		return false;
+	}else{
+		console.log('Login was validated');
+		loginUser();
+		return true;
+	}
+}
+
 
 // ---------------- Checks if client has a sessionID and decides to show the user form or not. If there is a sessionID, the name is written out too. -----------------------
 // Sets the sessionID to the variable session
@@ -268,8 +287,7 @@ function userName(){
 }
 
 // Create user
-function createUser(e){
-	e.preventDefault();
+function createUser(){
 	var firstname = document.getElementById("fName").value;
 	var lastname = document.getElementById("lName").value;
 	var email = document.getElementById("eMail").value;
@@ -280,8 +298,6 @@ function createUser(e){
 	//ajaxRequest(url, createUserId);
 }
 	function createUserId(response){
-		console.log(response);
-		console.log(response.message);
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
 	
 		if (response.status==400){
@@ -294,26 +310,23 @@ function createUser(e){
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
 		}else if (response.status==200){
-			messageThis ("Couldn't successfully create a user but reached the server", 'show', 'alert');
+			messageThis ("Couldn't create a user but reached the server, probably already is a user with the same info", 'show', 'alert');
 		}else {
-			messageThis ("Couldn't successfully create a user", 'show', 'alert');
+			messageThis ("Couldn't create a user", 'show', 'alert');
 		}
 		
 	}
 // When the forms submit button is clicked the function createUser is run
-document.getElementById("userInfoCreate").addEventListener("submit", createUser, false);
+document.getElementById("userInfoCreate").addEventListener("submit", regValidateCreate, false);
 
 // Login user
-function loginUser(e){
-	e.preventDefault();
+function loginUser(){
 	var email = document.getElementById("eMailLogin").value;
 	var password =  document.getElementById("passLogin").value;
 	JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
 	//var url=edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 }
 	function loginUserId(response){
-		console.log(response);
-		console.log(response.message);
 		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
 	
 		if (response.status==400){
@@ -326,14 +339,14 @@ function loginUser(e){
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
 		}else if (response.status==200){
-			messageThis ("Couldn't successfully log in but reached the server", 'show', 'alert');
+			messageThis ("Couldn't log in but reached the server", 'show', 'alert');
 		}else {
-			messageThis ("Couldn't successfully log in", 'show', 'alert');
+			messageThis ("Couldn't log in", 'show', 'alert');
 		}
 	}
 
 // When the forms submit button is clicked the function loginUser is run
-document.getElementById("userInfoLogin").addEventListener("submit", loginUser, false);
+document.getElementById("userInfoLogin").addEventListener("submit", regValidateLogin, false);
 
 // Adds users highscore to the leaderboards
 function sendUserScore(sessionID,totalScore){

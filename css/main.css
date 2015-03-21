@@ -108,6 +108,7 @@ input {
 	border-radius: 10px;
 	color: #a8a8a8;
 	padding: 0 5px;
+	font-size: 10pt;
 }input:focus {
 	border-bottom: solid 2px #FE5000;
 	outline: none;
@@ -130,9 +131,18 @@ ol {
 	margin: 0 auto;
 	padding: 0;
 	
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+	-webkit-justify-content: space-around;
+	    -ms-flex-pack: distribute;
+	        justify-content: space-around;
 	width: 75%;
 } ol > li > h4 {
 		font-size: 32pt;
@@ -183,6 +193,10 @@ header h1 {
 	display: block !important;
 }
 
+.space {
+	margin: 0 10px;
+}
+
 .centerWrap {
 	display: table;
 	margin: 10px auto 0;
@@ -191,7 +205,6 @@ header h1 {
 .button > p {margin: 0; color: #a8a8a8}
 
 .button{
-	/*border:#a8a8a8 solid 1px;*/
 	border-radius: 20px;
 	padding:10px;
 	cursor: pointer;
@@ -254,10 +267,21 @@ div.die {
 /*----- statsWrap Formatting -----*/
 
 .statsWrap {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	-webkit-justify-content: space-around;
+	    -ms-flex-pack: distribute;
+	        justify-content: space-around;
 	width: 100%;
 	text-align: center;
 	margin: 0 auto;

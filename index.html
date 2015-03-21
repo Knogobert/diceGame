@@ -6,7 +6,6 @@
 		<meta charset="utf-8">
 		<link href="css/main.css" rel="stylesheet" title="main" type="text/css"/>
 		<script src="js/modernizr.js" title="modernizr" type="text/javascript"></script>
-		<script src="js/h5f.min.js" title="H5F" type="text/javascript"></script>
 			<!--[if lt IE 9]>
 				<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js"></script>
 			<![endif]-->
@@ -80,8 +79,8 @@
 			<div id="personalWelcome"></div>
 			
 			<div class="centerWrap">
-				<div class="button" id="createUserButton" onclick="showUserInfo('Create','Login');"><p>createUser</p></div>
-				<div class="button" id="loginUserButton" onclick="showUserInfo('Login','Create');"><p>logIn</p></div>
+				<div class="button space" id="createUserButton" onclick="showUserInfo('Create','Login');"><p>createUser</p></div>
+				<div class="button space" id="loginUserButton" onclick="showUserInfo('Login','Create');"><p>logIn</p></div>
 			</div>
 			
 			<h3>Try to guess the sum of the first three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
@@ -118,8 +117,8 @@
 				</div>
 				
 				<div class="centerWrap">
-					<div class="button" onclick="diceRoll();"><p>guess</p></div>
-					<div class="button" id="tryAgain" onclick="resetScore(); messageThis('','hide');"><p>tryAgain</p></div>
+					<div class="button space" onclick="diceRoll();"><p>guess</p></div>
+					<div class="button space" id="tryAgain" onclick="resetScore(); messageThis('','hide');"><p>tryAgain</p></div>
 				</div>
 				
 				<div class="statsWrap">
@@ -129,9 +128,7 @@
 					<p class=""><span id="chancesLeft">10</span>chancesLeft</p>
 				</div>
 				
-				<div id="scoreLog">
-					<h4>scoreLog</h4>
-				</div>
+				
 				
 				<div class="highScoreWrap floatRight">
 					<div class="button" onclick="getUserScore(sessionID);"><p>getUserScore</p></div>
@@ -145,6 +142,9 @@
 					<div id="highscoreList" class="floatRight"></div>
 				</div>
 				
+				<div id="scoreLog">
+					<h4>scoreLog</h4>
+				</div>
 			</form>
 			
 		</main>
