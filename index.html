@@ -78,69 +78,79 @@
 			<div id="hidden-notification" class="hide"></div>
 			
 			<div id="personalWelcome"></div>
-
-			<h3>Try to guess the sum of all three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
-						
-			<div class="button" id="createUserButton" onclick="showUserInfo('Create','Login');"><p>createUser</p></div>
-			<div class="button" id="loginUserButton" onclick="showUserInfo('Login','Create');"><p>logIn</p></div>
+			
+			<div class="centerWrap">
+				<div class="button" id="createUserButton" onclick="showUserInfo('Create','Login');"><p>createUser</p></div>
+				<div class="button" id="loginUserButton" onclick="showUserInfo('Login','Create');"><p>logIn</p></div>
+			</div>
+			
+			<h3>Try to guess the sum of the first three dice. You have 10 chances. If you guess right the fourth die will multiply your guess and that will add to your highscore</h3>
 
 			<form id="diceGame" method="get">
-
-				<p class="floatRight">You have <span id="chancesLeft">10</span> chances left!</p>
 				
-				<p class="floatRight">Your total score right now is: <span id="totalScore">0</span></p>
+				<ol>
+					<li>
+						<div id="d1" class="die"><p>1</p></div>
+					</li>
+					<li>
+						<h4>+</h4>
+					</li>
+					<li>
+						<div id="d2" class="die"><p>2</p></div>
+					</li>
+					<li>
+						<h4>+</h4>
+					</li>
+					<li>
+						<div id="d3" class="die"><p>3</p></div>
+					</li>
+					<li>
+						<h4>x</h4>
+					</li>
+					<li>
+						<div id="d4" class="die"><p>4</p></div>
+					</li>
+				</ol>
+				
+				<div class="centerWrap">
+					<label for="guess">yourGuess</label>
+					<input type="number" name="guess" id="guess" min="3" max="18" step="1" value="11" required />
+				</div>
+				
+				<div class="centerWrap">
+					<div class="button" onclick="diceRoll();"><p>guess</p></div>
+					<div class="button" id="tryAgain" onclick="resetScore(); messageThis('','hide');"><p>tryAgain</p></div>
+				</div>
+				
+				<div class="statsWrap">
+					<p class=""><span id="diceSum">0</span>diceSum</p>
+					<p class=""><span id="roundScore">0</span>roundScore</p>
+					<p class=""><span id="totalScore">0</span>totalScore</p>
+					<p class=""><span id="chancesLeft">10</span>chancesLeft</p>
+				</div>
+				
+				<div id="scoreLog">
+					<h4>scoreLog</h4>
+				</div>
 				
 				<div class="highScoreWrap floatRight">
 					<div class="button" onclick="getUserScore(sessionID);"><p>getUserScore</p></div>
-					<div id="userScoreList" class="floatRight"></div>
 					<div class="button" onclick="removeUserScoreList();"><p>hideUserScore</p></div>
+					<div id="userScoreList" class="floatRight"></div>
 				</div>
 				
 				<div class="highScoreWrap floatRight">
 					<div class="button" onclick="getHighscore();"><p>getHighscore</p></div>
-					<div id="highscoreList" class="floatRight"></div>
 					<div class="button" onclick="removeHighscoreList();"><p>hideHighscore</p></div>
-					<input type="button" value="Get(WIP)" onclick="get()" />
+					<div id="highscoreList" class="floatRight"></div>
 				</div>
 				
-				<ol>
-					<li>
-						<h4>Die #1: </h4><div id="d1" class="die"><p>.</p></div>
-					</li>
-					<li>
-						<h4>Die #2: </h4><div id="d2" class="die"><p>..</p></div>
-					</li>
-					<li>
-						<h4>Die #3: </h4><div id="d3" class="die"><p>.:</p></div>
-					</li>
-				</ol>
-				
-				<label for="guess">yourGuess</label>
-				<input type="number" name="guess" id="guess" min="3" max="18" step="1" value="11" required/>
-
-				<br/>
-
-				<h4>Untouchable Die #4: </h4><div id="d4" class="die"><p>::</p></div>
-
-				<br/>
-				
-				<div class="button" onclick="diceRoll();"><p>guess</p></div>
-				
-				<div class="button" id="tryAgain" onclick="resetScore(); messageThis('','hide');"><p>tryAgain</p></div>
-				
 			</form>
-
-			<p>The sum of the 3 dice is: <span id="diceSum">0</span></p>
-			
-			<p>Your score this round is: <span id="roundScore">0</span></p>
-			
-			<div id="scoreLog">
-				<h4>scoreLog</h4>
-			</div>
 			
 		</main>
 		<footer>
 			<p>&copy; nipSauce, 2015-01-21<p>
+				<input type="button" value="Get(WIP)" onclick="get()" />
 		</footer>
 		
 		<script src="js/js.js" title="scripts" type="text/javascript"></script>

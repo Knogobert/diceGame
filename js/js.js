@@ -16,10 +16,10 @@ function diceRoll(){
 			var d2 = randomizer(1, 6);
 			var d3 = randomizer(1, 6);
 			var d4 = randomizer(1, 6);
-			document.getElementById('d1').innerHTML = "<p>"+d1+"</p>";
-			document.getElementById('d2').innerHTML = "<p>"+d2+"</p>";
-			document.getElementById('d3').innerHTML = "<p>"+d3+"</p>";
-			document.getElementById('d4').innerHTML = "<p>"+d4+"</p>";
+			document.getElementById('d1').innerHTML = '<img src="img/die'+d1+'.png">';
+			document.getElementById('d2').innerHTML = '<img src="img/die'+d2+'.png">';
+			document.getElementById('d3').innerHTML = '<img src="img/die'+d3+'.png">';
+			document.getElementById('d4').innerHTML = '<img src="img/die'+d4+'.png">';
 			
 			roundScore = 0;
 			var diceSum = (d1+d2+d3);
@@ -34,6 +34,8 @@ function diceRoll(){
 				document.getElementById('totalScore').innerHTML = totalScore;
 				console.log("diceGame: Your score this round is: "+roundScore);
 				console.log("diceGame: Correct guess! "+guess+" was right!");
+				blinkStats('roundScore');
+				blinkStats('totalScore');
 			}else {
 				document.getElementById('roundScore').innerHTML = roundScore;
 				document.getElementById('totalScore').innerHTML = totalScore;
@@ -41,7 +43,8 @@ function diceRoll(){
 			}
 			chancesLeft--;
 			document.getElementById('chancesLeft').innerHTML = chancesLeft;
-			console.log("diceGame: You have "+chancesLeft+" chances left");
+			blinkStats('chancesLeft');
+			console.log("diceGame: "+chancesLeft+" chances left");
 			scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess);
 			if(chancesLeft==0){
 				sendUserScore(sessionID,totalScore);
@@ -61,21 +64,17 @@ function resetScore(){
 	totalScore = 0;
 	roundScore = 0;
 	chancesLeft = 10;
-	document.getElementById('d1').innerHTML = '.';
-	document.getElementById('d2').innerHTML = '..';
-	document.getElementById('d3').innerHTML = '.:';
-	document.getElementById('d4').innerHTML = '::';
+	document.getElementById('d1').innerHTML = '<p>1</p>';
+	document.getElementById('d2').innerHTML = '<p>2</p>';
+	document.getElementById('d3').innerHTML = '<p>3</p>';
+	document.getElementById('d4').innerHTML = '<p>4</p>';
 	document.getElementById('diceSum').innerHTML = '0';
 	document.getElementById('roundScore').innerHTML = '0';
 	document.getElementById('totalScore').innerHTML = '0';
 	document.getElementById('chancesLeft').innerHTML = 10;
 	document.getElementById('scoreLog').innerHTML = '<h4>scoreLog</h4>';
-	//document.getElementById('tryAgain').childNodes[0].style.color="#a8a8a8";
 	document.getElementById('tryAgain').classList.remove('buttonOrange');
 }
-
-// Images instead
-// document.getElementsByTagName('img')[i].setAttribute('src', 'img/'+i+'.jpg');
 
 // Score logging, creates an entry every time diceRoll() is run
 function scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess){
@@ -85,6 +84,12 @@ function scoreLog(diceSum,d4,roundScore,totalScore,chancesLeft,guess){
 	}
 	resultThisRound.innerHTML = '<span>'+(chancesLeft+1)+'</span> You rolled: <span class="fat">'+diceSum+' x '+d4+'</span>, your score this round was: <span>'+roundScore+'</span> and your total score is: <span>'+totalScore+'</span>';
 	document.getElementById('scoreLog').appendChild(resultThisRound);
+}
+
+// Blink statsCounters when change happens
+function blinkStats(statsCounter){
+	document.getElementById(statsCounter).style.backgroundColor="#FE5000";
+	setTimeout(function(){document.getElementById(statsCounter).style.backgroundColor="#2E2E2E";}, 80)
 }
 
 // Messaging, alert or message, runs for 5 seconds
@@ -127,6 +132,12 @@ function swap(showObject, hideObject) {
     
     document.getElementById(showObject).classList.add('show');
     document.getElementById(showObject).classList.remove('hide');
+    
+    if(showObject=='userInfoCreate'){
+		document.getElementById("fName").focus();
+	}else {
+		document.getElementById("eMail").focus();
+	}
 }
 
 // For the Create User or Login buttons on the main page
@@ -138,6 +149,12 @@ function showUserInfo(showCreateOrLogin, hideCreateOrLogin){
     
 	document.getElementById('userInfo'+showCreateOrLogin).classList.add('show');
 	document.getElementById('userInfo'+showCreateOrLogin).classList.remove('hide');
+	
+	if(showCreateOrLogin=='Create'){
+		document.getElementById("fName").focus();
+	}else {
+		document.getElementById("eMail").focus();
+	}
 }
 
 //Checks the element if it has a certain class or not
