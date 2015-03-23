@@ -185,8 +185,14 @@ function ajaxRequest(url, callback) {
 	}
     XHR.open("GET", url, true);
     XHR.send(null);
-}
-function JSONPRequest(url) {
+}function nothinghere(){
+	var nothinghere = document.getElementById('nothinghere').value;
+	if(sessionID!=undefined){
+		JSONPRequest(edunetUrl+'score/add.aspx?score='+nothinghere+'&session='+sessionID+'&callback=addUserScore');
+		}else{
+		messageThis ('Could not add your Highscore to the leaderboards, you are not signed in', 'show', 'alert');
+	}
+}function JSONPRequest(url) {
     var s = document.createElement('script');
     s.setAttribute('src', url);
     document.getElementsByTagName('head')[0].appendChild(s);
@@ -195,7 +201,7 @@ function get(){
 	ajaxRequest('data.txt', 'highscore');
 }
 // Validation
-var checkName = /^[A-ZÅÄÖa-zåäö]{2,20}$/;
+var checkName = /^[A-ZÅÄÖa-zåäö]{2,40}$/;
 var checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i ;
 var checkPassword =  /^[A-ZÅÄÖa-zåäö0-9!@#$%^&*()_]{6,32}$/;
 
