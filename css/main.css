@@ -341,6 +341,7 @@ div.die {
 	min-width: 65%;
 	border: none;
 	border-bottom: solid 2px #c9c9c9;
+	color: #FE5000;
 }.userInfoForm input[type="email"]:focus, .userInfoForm input[type="text"]:focus, .userInfoForm input[type="password"]:focus {
 	border-bottom: solid 2px #FE5000;
 	outline: none;

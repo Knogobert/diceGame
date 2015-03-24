@@ -308,10 +308,14 @@ function createUser(){
 	
 		if (response.status==400){
 			messageThis ("Created a user!", 'show', 'message');
-			localStorage.logSessionID = response.session; // Sets the session to localStorage.logSessionID etc.
-			localStorage.firstName = response.user.firstName;
-			localStorage.lastName = response.user.lastName;
-			sessionID = localStorage.logSessionID;
+			
+			//localStorage.logSessionID = response.session; // Sets the session to localStorage.logSessionID etc.
+			localStorage.firstName = document.getElementById("fName").value;
+			localStorage.lastName = document.getElementById("lName").value;
+			localStorage.email = document.getElementById("eMail").value;
+			localStorage.password = document.getElementById("pass").value;
+			//sessionID = localStorage.logSessionID;
+			JSONPRequest(edunetUrl+'user/login.aspx?email='+localStorage.email+'&pwd='+localStorage.password+'&callback=loginUserId');
 			document.getElementById('popUpBG').classList.add('hide');
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
@@ -329,7 +333,7 @@ document.getElementById("userInfoCreate").addEventListener("submit", regValidate
 function loginUser(){
 	var email = document.getElementById("eMailLogin").value;
 	var password =  document.getElementById("passLogin").value;
-	JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId')
+	JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId');
 	//var url=edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
 }
 	function loginUserId(response){
