@@ -299,12 +299,12 @@ function createUser(){
 	var email = document.getElementById("eMail").value;
 	var password =  document.getElementById("pass").value;
 	
-	JSONPRequest(edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
-	//var url= edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId';
-	//ajaxRequest(url, createUserId);
+	//JSONPRequest(edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname+'&callback=createUserId');
+	var url= edunetUrl+'user/create.aspx?email='+email+'&pwd='+password+'&firstname='+firstname+'&lastname='+lastname;
+	ajaxRequest(url, createUserId);
 }
-	function createUserId(response){
-		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
+	function createUserId(ans){
+		var response=JSON.parse(ans.responseText);
 	
 		if (response.status==400){
 			messageThis ("Created a user!", 'show', 'message');
@@ -315,7 +315,9 @@ function createUser(){
 			localStorage.email = document.getElementById("eMail").value;
 			localStorage.password = document.getElementById("pass").value;
 			//sessionID = localStorage.logSessionID;
-			JSONPRequest(edunetUrl+'user/login.aspx?email='+localStorage.email+'&pwd='+localStorage.password+'&callback=loginUserId');
+			//JSONPRequest(edunetUrl+'user/login.aspx?email='+localStorage.email+'&pwd='+localStorage.password+'&callback=loginUserId');
+			var url=edunetUrl+'user/login.aspx?email='+localStorage.email+'&pwd='+localStorage.password;
+			ajaxRequest(url, loginUserId);
 			document.getElementById('popUpBG').classList.add('hide');
 			document.getElementById('popUpBG').classList.remove('show');
 			userName();// Writes out name
@@ -333,11 +335,12 @@ document.getElementById("userInfoCreate").addEventListener("submit", regValidate
 function loginUser(){
 	var email = document.getElementById("eMailLogin").value;
 	var password =  document.getElementById("passLogin").value;
-	JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId');
-	//var url=edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId';
+	//JSONPRequest(edunetUrl+'user/login.aspx?email='+email+'&pwd='+password+'&callback=loginUserId');
+	var url=edunetUrl+'user/login.aspx?email='+email+'&pwd='+password;
+	ajaxRequest(url, loginUserId);
 }
-	function loginUserId(response){
-		//var ans=JSON.parse(response.responseText); LÄGG TILL NÄR DU ANVÄNDER AJAX
+	function loginUserId(ans){
+		var response=JSON.parse(ans.responseText);
 	
 		if (response.status==400){
 			messageThis ("Logged in!", 'show', 'message');
@@ -361,13 +364,16 @@ document.getElementById("userInfoLogin").addEventListener("submit", regValidateL
 // Adds users highscore to the leaderboards
 function sendUserScore(sessionID,totalScore){
 	if(sessionID!=undefined){
-		JSONPRequest(edunetUrl+'score/add.aspx?score='+totalScore+'&session='+sessionID+'&callback=addUserScore');// Change totalScore to a high number to "hack" the leaderboards
+		//JSONPRequest(edunetUrl+'score/add.aspx?score='+totalScore+'&session='+sessionID+'&callback=addUserScore');
+		var url=edunetUrl+'score/add.aspx?score='+totalScore+'&session='+sessionID;
+		ajaxRequest(url, addUserScore);
 	}else{
 		messageThis ('Could not add your Highscore to the leaderboards, you are not signed in', 'show', 'alert');
 	}
 }
 	function addUserScore(data){
-		if(data.message=="score saved"){
+		var response=JSON.parse(data.message);
+		if(response=="score saved"){
 			messageThis ('Your Highscore was added to the leaderboards', 'show', 'message');
 		}else{
 			messageThis ('Could not add your Highscore to the leaderboards', 'show', 'alert');
@@ -380,7 +386,9 @@ var userScoreList=document.getElementById('userScoreList');
 function getUserScore(sessionID){
 	if(sessionID!=undefined&&userScoreClicks<1){
 		userScoreList.innerHTML = "";
-		JSONPRequest(edunetUrl+'score/user.aspx?session='+sessionID+'&callback=writeUserScore');
+		//JSONPRequest(edunetUrl+'score/user.aspx?session='+sessionID+'&callback=writeUserScore');
+		var url=edunetUrl+'score/user.aspx?session='+sessionID;
+		ajaxRequest(url, writeUserScore);
 		userScoreClicks++;
 		setTimeout(function(){userScoreClicks=0},2000);
 	}else if(userScoreClicks!=0){
@@ -390,7 +398,8 @@ function getUserScore(sessionID){
 	}
 }
 	function writeUserScore(data){
-		if(data.message!="unable to find highscore"){
+		var response=JSON.parse(data.message);
+		if(response!="unable to find highscore"){
 			for (var i=0;i<data.scores.length||i<data.scores[10];i++){
 				
 				var points=document.createElement('h6');
@@ -419,7 +428,9 @@ var highscoreList=document.getElementById('highscoreList');
 function getHighscore(){
 	if (highscoreClicks<1){
 		highscoreList.innerHTML="";
-		JSONPRequest(edunetUrl+'score/top.aspx?callback=writeHighscore');
+		//JSONPRequest(edunetUrl+'score/top.aspx?callback=writeHighscore');
+		var url=edunetUrl+'score/top.aspx?';
+		ajaxRequest(url, writeHighscore);
 		highscoreClicks++;
 		setTimeout(function(){highscoreClicks=0},2000);
 	}else if(highscoreClicks!=0){
@@ -429,7 +440,7 @@ function getHighscore(){
 	}
 }
 	function writeHighscore(data){
-		console.log(data);
+		
 		for (var i=0;i<data.scores.length;i++){
 			var name= document.createElement('h5');
 			name.innerHTML=data.scores[i].name;
