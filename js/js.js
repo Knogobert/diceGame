@@ -197,9 +197,7 @@ function ajaxRequest(url, callback) {
     s.setAttribute('src', url);
     document.getElementsByTagName('head')[0].appendChild(s);
 }
-function get(){
-	ajaxRequest('data.txt', 'highscore');
-}
+
 // Validation
 var checkName = /^[A-ZÅÄÖa-zåäö]{2,40}$/;
 var checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i ;
