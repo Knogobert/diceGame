@@ -11,6 +11,7 @@ var chancesLeft = 10;
 function diceRoll(){
 	var guess = document.getElementById('guess').value;
 	if(guess >= 3 && guess <= 18 ){
+		document.getElementById('guess').classList.remove('buttonOrange');
 		if(chancesLeft>0){
 			var d1 = randomizer(1, 6);
 			var d2 = randomizer(1, 6);
@@ -56,6 +57,7 @@ function diceRoll(){
 		}
 	}else{
 		messageThis ('Enter a number between 3 and 18', 'show', 'alert');
+		document.getElementById('guess').classList.add('buttonOrange');
 	}
 }
 
@@ -64,10 +66,10 @@ function resetScore(){
 	totalScore = 0;
 	roundScore = 0;
 	chancesLeft = 10;
-	document.getElementById('d1').innerHTML = '<p>1</p>';
-	document.getElementById('d2').innerHTML = '<p>2</p>';
-	document.getElementById('d3').innerHTML = '<p>3</p>';
-	document.getElementById('d4').innerHTML = '<p>4</p>';
+	document.getElementById('d1').innerHTML = '<img src="img/die1.png">';
+	document.getElementById('d2').innerHTML = '<img src="img/die2.png">';
+	document.getElementById('d3').innerHTML = '<img src="img/die3.png">';
+	document.getElementById('d4').innerHTML = '<img src="img/die4.png">';
 	document.getElementById('diceSum').innerHTML = '0';
 	document.getElementById('roundScore').innerHTML = '0';
 	document.getElementById('totalScore').innerHTML = '0';
@@ -122,7 +124,7 @@ function reportErrors(errors){
 		msg += "\n" + numError + ". " + errors[i];
 		console.log(msg);
 	}
-	alert(msg);
+	messageThis (msg, 'show', 'alert');
 }
 
 // swaps between the Create User and Login 
@@ -179,7 +181,7 @@ function ajaxRequest(url, callback) {
 			if (XHR.status == 200) {
 				callback(XHR); 
 			} else {
-				alert("Server problems.");
+				messageThis ("Can't connect to server (AJAX)", 'show', 'alert');
 			}
 		}
 	}
@@ -318,6 +320,7 @@ function createUser(){
 			JSONPRequest(edunetUrl+'user/login.aspx?email='+localStorage.email+'&pwd='+localStorage.password+'&callback=loginUserId');
 			document.getElementById('popUpBG').classList.add('hide');
 			document.getElementById('popUpBG').classList.remove('show');
+			setTimeout("location.reload(true);",500);// Reloads page after successful user creation to log in the user too.
 			userName();// Writes out name
 		}else if (response.status==200){
 			messageThis ("Couldn't create a user but reached the server, probably already is a user with the same info", 'show', 'alert');

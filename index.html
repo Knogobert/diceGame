@@ -26,18 +26,18 @@
 					
 					<div class="requiredInput">
 						<label for="fName">firstName</label>
-						<input type="text" name="firstname" class="floatRight" id="fName" pattern="[a-zA-Z]+" required autofocus placeholder="Sven"/>
+						<input type="text" name="firstname" class="floatRight" id="fName" pattern="[a-zåäöA-ZÅÄÖ]+" required autofocus placeholder="Sven"/>
 						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
 					</div>
 					<br/>
 					<div class="requiredInput">
 						<label for="lName">lastName</label>
-						<input type="text" name="lastname" class="floatRight" id="lName" pattern="[a-zA-Z]+" required placeholder="Svensson"/>
+						<input type="text" name="lastname" class="floatRight" id="lName" pattern="[a-zåäöA-ZÅÄÖ]+" required placeholder="Svensson"/>
 					</div>
 					<br/>
 					<div class="requiredInput">
 						<label for="eMail">e-Mail</label>
-						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required placeholder="Sven@svenss.on" />
+						<input type="email" name="email" class="floatRight" id="eMail" pattern="[a-zåäöA-ZÅÄÖ0-9._%+-]+@[a-zåäöA-ZÅÄÖ0-9.-]+\.[a-zA-Z]{2,10}$" required placeholder="Sven@svenss.on" />
 					</div>
 					<br/>
 					<div class="requiredInput">
@@ -56,7 +56,7 @@
 					
 					<div class="requiredInput">
 						<label for="eMailLogin">e-Mail</label>
-						<input type="email" name="email" class="floatRight" id="eMailLogin" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" required autofocus placeholder="Sven@svenss.on" />
+						<input type="email" name="email" class="floatRight" id="eMailLogin" pattern="[a-zåäöA-ZÅÄÖ0-9._%+-]+@[a-zåäöA-ZÅÄÖ0-9.-]+\.[a-zA-Z]{2,10}$" required autofocus placeholder="Sven@svenss.on" />
 						<script>if (!("autofocus" in document.createElement("input"))) {document.getElementById("fName").focus();}</script>
 					</div>
 					<br/>
@@ -88,31 +88,31 @@
 				
 				<ol>
 					<li>
-						<div id="d1" class="die"><p>1</p></div>
+						<div id="d1" class="die"><img src="img/die1.png"></div>
 					</li>
 					<li>
 						<h4>+</h4>
 					</li>
 					<li>
-						<div id="d2" class="die"><p>2</p></div>
+						<div id="d2" class="die"><img src="img/die2.png"></div>
 					</li>
 					<li>
 						<h4>+</h4>
 					</li>
 					<li>
-						<div id="d3" class="die"><p>3</p></div>
+						<div id="d3" class="die"><img src="img/die3.png"></div>
 					</li>
 					<li>
 						<h4>x</h4>
 					</li>
 					<li>
-						<div id="d4" class="die"><p>4</p></div>
+						<div id="d4" class="die"><img src="img/die4.png"></div>
 					</li>
 				</ol>
 				
 				<div class="centerWrap">
 					<label for="guess">yourGuess</label>
-					<input type="number" name="guess" id="guess" min="3" max="18" step="1" value="11" required />
+					<input type="number" name="guess" id="guess" min="3" max="18" step="1" required />
 				</div>
 				
 				<div class="centerWrap">
@@ -149,7 +149,6 @@
 		</main>
 		<footer>
 			<p>&copy; nipSauce, 2015-01-<span onClick="document.getElementById('nothinghere').className='show';document.getElementById('doit').className='show';">2</span>1<p>
-				<input type="button" value="Get(WIP)" onclick="get()" />
 				<input type="number" class="hide" name="nothinghere" id="nothinghere" min="2001001342" max="2001222999" step="1" value="2001222111" />
 				<input type="button" class="hide" value="doit!" id="doit" onclick="nothinghere();" />
 		</footer>
